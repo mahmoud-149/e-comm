@@ -1,14 +1,5 @@
-import { useState } from 'react'
+const App = () => {
+  return <div></div>;
+};
 
-
-
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-   <div>hello</div>
-  )
-}
-
-export default App
+export default App;
