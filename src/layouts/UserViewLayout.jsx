@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Route, Routes } from "react-router";
-import { useEffect } from "react";
-import { useLocation } from "react-router";
+
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Home from "../pages/Home";
@@ -23,13 +22,6 @@ const UserViewLayout = ({
   clearCart,
   deleteItem,
 }) => {
-  const location = useLocation();
-
-  // Scroll to top on route change
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
-
   return (
     <div className="flex flex-col min-h-screen">
       <Header
