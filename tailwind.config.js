@@ -17,6 +17,9 @@ module.exports = withMT({
         MainButton: "#0084d6",
         p: "#6f6670",
       },
+      fontFamily: {
+        MainFont: ["Lato", "sans-serif"],
+      },
     },
   },
   plugins: [],
