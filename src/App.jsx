@@ -1,5 +1,12 @@
+
+import AdminViewLayout from './layouts/AdminViewLayout';
+
+
+
+
+
 const App = () => {
-  return <div>hello hell</div>;
+  return <div> <AdminViewLayout/> </div>;
 };
 
 
