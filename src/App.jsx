@@ -1,4 +1,8 @@
 
+
+import AdminViewLayout from './layouts/AdminViewLayout';
+
+
 import { useEffect, useState } from "react";
 import UserViewLayout from "./layouts/UserViewLayout";
 
@@ -87,6 +91,7 @@ const App = () => {
     />
   );
 }
+
 
 
 export default App;

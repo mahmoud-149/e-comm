@@ -1,5 +1,5 @@
 const AdminViewLayout = () => {
-  return <div></div>;
+  return <div>adminnn</div>;
 };
 
 export default AdminViewLayout;
