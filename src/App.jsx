@@ -5,6 +5,9 @@ import AdminViewLayout from './layouts/AdminViewLayout';
 
 import { useEffect, useState } from "react";
 import UserViewLayout from "./layouts/UserViewLayout";
+import { Route, Routes } from 'react-router';
+import { ThemeProvider } from '@material-tailwind/react';
+import Store from './../context/Store';
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -80,15 +83,27 @@ const App = () => {
   }
 
   return (
-    <UserViewLayout
-      products={products}
-      cartItems={cartItems}
-      addToCart={addToCart}
-      removeFromCart={removeFromCart}
-      updateCartItemQuantity={updateCartItemQuantity}
-      clearCart={clearCart}
-      deleteItem={deleteItem}
-    />
+    <Store.Provider value={{ products }}>
+      <div>
+        <Routes>
+          <Route
+            path="/*"
+            element={
+              <UserViewLayout
+                products={products}
+                cartItems={cartItems}
+                addToCart={addToCart}
+                removeFromCart={removeFromCart}
+                updateCartItemQuantity={updateCartItemQuantity}
+                clearCart={clearCart}
+                deleteItem={deleteItem}
+              />
+            }
+          />
+          <Route path="/admin/*" element={<AdminViewLayout />} />
+        </Routes>
+      </div>
+    </Store.Provider>
   );
 }
 
