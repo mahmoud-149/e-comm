@@ -12,7 +12,7 @@ import ContactUs from "../pages/ContactUs";
 import Login from "../pages/validations/LogIn";
 import Cart from "../pages/cart/Cart";
 import CheckOut from "../pages/cart/CheckOut";
-
+import SignUp from "../pages/validations/SigunUp";
 const UserViewLayout = ({
   products,
   cartItems,
@@ -52,6 +52,7 @@ const UserViewLayout = ({
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route
             path="/cart"
             element={

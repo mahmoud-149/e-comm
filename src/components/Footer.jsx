@@ -14,7 +14,7 @@ const Footer = () => {
       <div className="container mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div className="space-y-6">
-            <Typography variant="h4" className="font-bold text-black">
+            <Typography variant="h4" className="font-serif text-6xl text-black">
               DNK
             </Typography>
             <Typography className="text-blue-gray-600 leading-relaxed">
