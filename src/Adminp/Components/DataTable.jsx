@@ -1,4 +1,3 @@
-//delete function need backend
 
 
 import React, { useContext, useEffect } from 'react'
@@ -15,9 +14,12 @@ const deleteProduct = async (id) => {   //waiting for realbackend to delete
   // console.log(`${id} deleted`);
   
   try {
+    const URL=import.meta.env.VITE_URL;
+          
+
     const req = await axios({
       method: "delete",
-      url: `http://localhost:3000/products/${id}`,
+      url: `${URL}/products/${id}`,
     });
 
     return req.status;
@@ -50,8 +52,8 @@ const handleDelete = (id) => {
 
 const DataTable = () => {
       const { products } = useContext(Store);
-
- 
+          // const { setProducts } = useContext(Store);
+  useEffect(() => {}, [products]);
 
   return (
     <Card className="h-full w-full overflow-auto ">
