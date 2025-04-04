@@ -19,9 +19,10 @@ const ViewProduct = () => {
 
     const getTheView= async ()=>{
       /*https://fakestoreapi.com/products */
+      const URL=import.meta.env.VITE_URL;
       const req = await axios({
         method: "get",
-        url: `https://fakestoreapi.com/products/${id}`,
+        url: `${URL}/products/${id}`,
       });
       setProduct(req.data);
     }
@@ -36,7 +37,7 @@ const ViewProduct = () => {
 
   return (
     <div className="flex justify-center">
-      <Card className="w-full flex flex-row">
+      <Card className="w-full flex flex-col md:flex-row ">
         <CardHeader shadow={true} floated={false} className="h-96">
           <img
             src={product?.image}
@@ -62,14 +63,7 @@ const ViewProduct = () => {
           </Typography>
         </CardBody>
         <CardFooter className="pt-0 flex flex-col justify-center items-center gap-4">
-          <Button
-            ripple={false}
-            fullWidth={true}
-            color="blue"
-            className=" shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-          >
-            View
-          </Button>
+         
           <Button
             ripple={false}
             fullWidth={true}

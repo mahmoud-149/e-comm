@@ -14,18 +14,26 @@ const App = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+    const getTheProducts=()=>{
+        const URL = import.meta.env.VITE_URL;
+
+        fetch(`${URL}/products`)
+          .then((response) => response.json())
+          .then((data) => {
+            setProducts(data);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error("Error fetching products:", error);
+            setLoading(false);
+          });
+
+
+    };
+
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products")
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-        setLoading(false);
-      });
-  }, []);
+    getTheProducts()
+  }, [products]);
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
@@ -82,7 +90,7 @@ const App = () => {
   }
 
   return (
-    <Store.Provider value={{ products }}>
+    <Store.Provider value={{ products,setProducts }}>
       <div>
         <Routes>
           <Route

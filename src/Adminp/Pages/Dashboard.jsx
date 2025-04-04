@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 const Dashboard = () => {
   return (
-    <div className="flex gap-5 justify-around pt-9">
+    <div className="flex gap-5 justify-around items-center pt-9 flex-col md:flex-row lg:flex-row ">
       <Card
         color="blue"
         variant="gradient"
