@@ -45,21 +45,20 @@ const App = () => {
 
   const removeFromCart = (productId) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === productId);
-
-      if (existingItem && existingItem.quantity === 1) {
-        return prevItems.filter((item) => item.id !== productId);
-      }
-
       return prevItems.map((item) =>
-        item.id === productId ? { ...item, quantity: item.quantity - 1 } : item
+        item.id === productId
+          ? {
+              ...item,
+              quantity: item.quantity > 0 ? { deleteItem } : item.quantity - 1,
+            }
+          : item
       );
     });
   };
 
   const updateCartItemQuantity = (productId, newQuantity) => {
     if (newQuantity < 1) {
-      removeFromCart(productId);
+      deleteItem(productId);
       return;
     }
 
