@@ -33,7 +33,10 @@ const UserViewLayout = ({
 
       <main className="flex-grow">
         <Routes>
-          <Route index element={<Home addToCart={addToCart} />} />
+          <Route
+            index
+            element={<Home addToCart={addToCart} products={products} />}
+          />
           <Route
             path="/everything"
             element={<Everything products={products} addToCart={addToCart} />}
@@ -61,10 +64,7 @@ const UserViewLayout = ({
               />
             }
           />
-          <Route
-            path="/checkout"
-            element={<CheckOut cartItems={cartItems} clearCart={clearCart} />}
-          />
+          <Route path="/checkout" element={<CheckOut />} />
         </Routes>
       </main>
 

@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
-// eslint-disable-next-line no-unused-vars
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Navbar,
   Collapse,
@@ -122,14 +121,14 @@ const Header = ({ cartItems, updateCartItemQuantity, deleteItem }) => {
   }, [location]);
 
   return (
-    <div className="sticky top-0 z-50 bg-white shadow-md">
-      <Navbar className="max-w-full px-6 py-4 lg:py-7 lg:w-full rounded-none border-none">
+    <div className="sticky top-0 z-50">
+      <Navbar className="bg-white backdrop-opacity-70 max-w-full px-6 py-4 lg:py-7 lg:w-full rounded-none border-none">
         <div className="flex items-center justify-between text-blue-gray-900">
           <Typography
             variant="h6"
             className="mr-4 cursor-pointer py-1.5 font-MainFont text-2xl lg:text-xl"
           >
-            <Link to="/" className="font-bold">
+            <Link to="/" className=" text-5xl font-serif">
               DNK
             </Link>
           </Typography>
@@ -167,9 +166,9 @@ const Header = ({ cartItems, updateCartItemQuantity, deleteItem }) => {
         placement="right"
         open={openRight}
         onClose={closeDrawerRight}
-        className="p-4"
+        className="p-4 "
       >
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-6 flex items-center justify-between ">
           <Typography variant="h5" color="blue-gray">
             Shopping Cart ({cartItemsCount})
           </Typography>
@@ -211,7 +210,7 @@ const Header = ({ cartItems, updateCartItemQuantity, deleteItem }) => {
               {cartItems.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center gap-4 p-3 bg-blue-gray-50 rounded-lg"
+                  className="flex items-center gap-4 p-2 bg-blue-gray-50 rounded-lg"
                 >
                   <img
                     src={item.image}
@@ -227,7 +226,7 @@ const Header = ({ cartItems, updateCartItemQuantity, deleteItem }) => {
                       {item.title}
                     </Typography>
                     <Typography variant="small" className="text-blue-gray-600">
-                      ${item.price.toFixed(2)} * {item.quantity}
+                      ${item.price.toFixed(2)} × {item.quantity}
                     </Typography>
                     <Typography variant="small" className="font-medium">
                       ${(item.price * item.quantity).toFixed(2)}
@@ -246,7 +245,7 @@ const Header = ({ cartItems, updateCartItemQuantity, deleteItem }) => {
                       </button>
                       <input
                         type="value"
-                        disabled={item.quantity}
+                        disabled
                         className="w-10 text-center border-x px-0"
                         min="1"
                         value={item.quantity}
@@ -302,14 +301,6 @@ const Header = ({ cartItems, updateCartItemQuantity, deleteItem }) => {
                   Checkout
                 </Button>
               </Link>
-              <Button
-                size="sm"
-                variant="outlined"
-                fullWidth
-                onClick={closeDrawerRight}
-              >
-                Continue Shopping
-              </Button>
             </div>
           </>
         )}
