@@ -1,4 +1,4 @@
-import AdminHeader from "../Adminp/Components/adminHeader";
+import AdminHeader from "../Adminp/Components/AdminHeader";
 import { Route, Routes } from 'react-router';
 import Dashboard from "../Adminp/Pages/Dashboard";
 import UserControl from './../Adminp/Pages/UserControl';
