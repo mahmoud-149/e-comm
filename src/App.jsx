@@ -1,7 +1,8 @@
+
 import { useEffect, useState } from "react";
 import UserViewLayout from "./layouts/UserViewLayout";
 
-function App() {
+const App = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -86,4 +87,7 @@ function App() {
   );
 }
 
+
 export default App;
+
+
