@@ -11,9 +11,14 @@ import {
 import { IoMdLogIn, IoMdCart } from "react-icons/io";
 import { Link, useLocation } from "react-router";
 import { FaBars, FaRegCircleXmark, FaTrash } from "react-icons/fa6";
+import { Avatar } from "@material-tailwind/react";
+import { useContext } from 'react';
+import Store from "../../context/Store";
+import Avaatarr from "./Avaatarr";
 
 function NavList({ openDrawerRight, cartItemsCount }) {
   const location = useLocation();
+  const { statslog} = useContext(Store);
 
   const navItems = [
     { path: "/men", label: "Men" },
@@ -43,22 +48,25 @@ function NavList({ openDrawerRight, cartItemsCount }) {
           </Link>
         </Typography>
       ))}
-
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-MainFont"
-      >
-        <Link
-          to="/login"
-          className={`flex items-center hover:text-blue-500 transition-colors text-lg lg:text-base ${
-            location.pathname === "/login" ? "text-blue-500" : ""
-          }`}
+      {statslog ? (
+        <Avaatarr/>
+      ) : (
+        <Typography
+          as="li"
+          variant="small"
+          color="blue-gray"
+          className="p-1 font-MainFont"
         >
-          <IoMdLogIn className="text-2xl lg:text-xl" />
-        </Link>
-      </Typography>
+          <Link
+            to="/login"
+            className={`flex items-center hover:text-blue-500 transition-colors text-lg lg:text-base ${
+              location.pathname === "/login" ? "text-blue-500" : ""
+            }`}
+          >
+            <IoMdLogIn className="text-2xl lg:text-xl" />
+          </Link>
+        </Typography>
+      )}
 
       <Typography
         as="li"

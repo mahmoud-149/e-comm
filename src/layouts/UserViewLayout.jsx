@@ -13,6 +13,8 @@ import Login from "../pages/validations/LogIn";
 import Cart from "../pages/cart/Cart";
 import CheckOut from "../pages/cart/CheckOut";
 import SignUp from "../pages/validations/SigunUp";
+import MyProfile from "../pages/validations/MyProfile";
+import EditProfile from "../pages/validations/EditProfile";
 const UserViewLayout = ({
   products,
   cartItems,
@@ -53,6 +55,8 @@ const UserViewLayout = ({
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/myprofile" element={<MyProfile />} />
+          <Route path="/editprofile" element={<EditProfile />} />
           <Route
             path="/cart"
             element={
