@@ -9,6 +9,7 @@ import {
 import { Link } from "react-router";
 
 const LogIn = () => {
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-8xl flex-col md:flex-row items-center shadow-xl md:shadow-2xl transition-all duration-300 hover:shadow-3xl">
@@ -127,6 +128,7 @@ const LogIn = () => {
       </Card>
     </div>
   );
+
 };
 
 export default LogIn;
