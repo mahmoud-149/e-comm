@@ -1,38 +1,33 @@
-
-
-import AdminViewLayout from './layouts/AdminViewLayout';
-
+import AdminViewLayout from "./layouts/AdminViewLayout";
 
 import { useEffect, useState } from "react";
 import UserViewLayout from "./layouts/UserViewLayout";
-import { Route, Routes } from 'react-router';
-import { ThemeProvider } from '@material-tailwind/react';
-import Store from './../context/Store';
+import { Route, Routes } from "react-router";
+import { ThemeProvider } from "@material-tailwind/react";
+import Store from "./../context/Store";
 
 const App = () => {
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
-    const getTheProducts=()=>{
-        const URL = import.meta.env.VITE_URL;
+  const getTheProducts = () => {
+    const URL = import.meta.env.VITE_URL;
 
-        fetch(`${URL}/products`)
-          .then((response) => response.json())
-          .then((data) => {
-            setProducts(data);
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.error("Error fetching products:", error);
-            setLoading(false);
-          });
-
-
-    };
+    fetch(`${URL}/products`)
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+        setLoading(false);
+      });
+  };
 
   useEffect(() => {
-    getTheProducts()
+    getTheProducts();
   }, [products]);
 
   const addToCart = (product) => {
@@ -91,7 +86,7 @@ const App = () => {
   }
 
   return (
-    <Store.Provider value={{ products,setProducts }}>
+    <Store.Provider value={{ products, setProducts }}>
       <div>
         <Routes>
           <Route
@@ -113,10 +108,6 @@ const App = () => {
       </div>
     </Store.Provider>
   );
-}
-
-
+};
 
 export default App;
-
-
