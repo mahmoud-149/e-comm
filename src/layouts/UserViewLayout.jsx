@@ -12,7 +12,7 @@ import ContactUs from "../pages/ContactUs";
 import Login from "../pages/validations/LogIn";
 import Cart from "../pages/cart/Cart";
 import CheckOut from "../pages/cart/CheckOut";
-
+import SignUp from "../pages/validations/SigunUp";
 const UserViewLayout = ({
   products,
   cartItems,
@@ -33,7 +33,10 @@ const UserViewLayout = ({
 
       <main className="flex-grow">
         <Routes>
-          <Route index element={<Home addToCart={addToCart} />} />
+          <Route
+            index
+            element={<Home addToCart={addToCart} products={products} />}
+          />
           <Route
             path="/everything"
             element={<Everything products={products} addToCart={addToCart} />}
@@ -49,6 +52,7 @@ const UserViewLayout = ({
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route
             path="/cart"
             element={
@@ -61,10 +65,7 @@ const UserViewLayout = ({
               />
             }
           />
-          <Route
-            path="/checkout"
-            element={<CheckOut cartItems={cartItems} clearCart={clearCart} />}
-          />
+          <Route path="/checkout" element={<CheckOut />} />
         </Routes>
       </main>
 
