@@ -5,15 +5,44 @@ import UserViewLayout from "./layouts/UserViewLayout";
 import { Route, Routes } from "react-router";
 import { ThemeProvider } from "@material-tailwind/react";
 import Store from "./../context/Store";
+import axios from "axios";
+import NotFound from './pages/NotFound';
 
 const App = () => {
+  const [loggedin, setLoggedin] = useState(); //the user
+  const [statslog, setStatslog] = useState(localStorage.id ? true : false);
+
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const getLogInfo = () => {
+    if (localStorage.id) {
+      const URL = import.meta.env.VITE_URL; // to secure the data base in real projects
+      axios({
+        method: "get",
+        url: `${URL}/user/${localStorage.id}`,
+      }).then((res) => {
+        setLoggedin(res.data);
+      }).catch((e)=>{
+        console.log(e);
+        
+      });
+    }
+  };
+  const logOut = () => {
+    localStorage.removeItem("id");
+    setStatslog(false);
+  };
+ useEffect(() => {
+   getLogInfo();
+
+   // console.log("callbackend");
+ }, [statslog]);
+
+ 
   const getTheProducts = () => {
     const URL = import.meta.env.VITE_URL;
-
     fetch(`${URL}/products`)
       .then((response) => response.json())
       .then((data) => {
@@ -85,7 +114,17 @@ const App = () => {
   }
 
   return (
-    <Store.Provider value={{ products, setProducts }}>
+    <Store.Provider
+      value={{
+        products,
+        setProducts,
+        loggedin,
+        statslog,
+        logOut,
+        setLoggedin,
+        setStatslog,
+      }}
+    >
       <div>
         <Routes>
           <Route
@@ -102,7 +141,7 @@ const App = () => {
               />
             }
           />
-          <Route path="/admin/*" element={<AdminViewLayout />} />
+          <Route path="/admin/*" element={loggedin?.role=="admin"? (<AdminViewLayout />):(<NotFound/>)} />
         </Routes>
       </div>
     </Store.Provider>

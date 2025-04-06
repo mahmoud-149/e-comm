@@ -6,6 +6,7 @@ import ViewProduct from "./../Adminp/Pages/ViewProduct";
 import EditProduct from "./../Adminp/Pages/EditProduct";
 import AdminHeader from "../Adminp/Components/AdminHeader";
 import AddProduct from "../Adminp/Pages/AddProduct";
+import Footer from "../components/Footer";
 
 const AdminViewLayout = () => {
   return (
@@ -21,6 +22,7 @@ const AdminViewLayout = () => {
         <Route path="productcontrol/view/:id" element={<ViewProduct />} />
         <Route path="productcontrol/edit/:id" element={<EditProduct />} />
       </Routes>
+      <Footer/>
     </div>
   );
 };
