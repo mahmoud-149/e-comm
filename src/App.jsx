@@ -41,18 +41,34 @@ const App = () => {
  }, [statslog]);
 
  
-  const getTheProducts = () => {
+  const getTheProducts = async () => {
     const URL = import.meta.env.VITE_URL;
-    fetch(`${URL}/products`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching products:", error);
-        setLoading(false);
+    try{
+
+     const req= await  axios({
+        method:"get",
+        url:`${URL}/products`
       });
+      setProducts(req.data);
+      setLoading(false)
+
+    }catch(e){
+      setProducts(e.message);
+      setLoading(false);
+    }
+
+
+
+    // fetch(`${URL}/products`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setProducts(data);
+    //     setLoading(false);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error fetching products:", error);
+    //     setLoading(false);
+    //   });
   };
 
   useEffect(() => {
