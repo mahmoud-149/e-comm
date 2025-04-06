@@ -1,7 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router';
+import React from "react";
+import { Link } from "react-router";
 import {
-
   Card,
   CardHeader,
   CardBody,
@@ -67,21 +66,21 @@ const Dashboard = () => {
         </CardHeader>
 
         <CardFooter className="mt-12 p-0">
-        <Link to="productcontrol">
-          <Button
-            size="lg"
-            color="white"
-            className="hover:scale-[1.02] focus:scale-[1.02] active:scale-100"
-            ripple={false}
-            fullWidth={true}
+          <Link to="productcontrol">
+            <Button
+              size="lg"
+              color="white"
+              className="hover:scale-[1.02] focus:scale-[1.02] active:scale-100"
+              ripple={false}
+              fullWidth={true}
             >
-            Modify
-          </Button>
-        </Link>
+              Modify
+            </Button>
+          </Link>
         </CardFooter>
       </Card>
     </div>
   );
-}
+};
 
-export default Dashboard
+export default Dashboard;

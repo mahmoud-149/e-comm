@@ -32,7 +32,7 @@ const EditProduct = () => {
       url: `${URL}/products/${id}`,
     });
     setCurrentProduct(req.data);
-    //    console.log(req.data);
+        // console.log(req.data);
   };
   const postTheEdit = () => {
     try {
@@ -50,10 +50,11 @@ const EditProduct = () => {
     }
   };
   useEffect(()=>{
-    console.log(currentProduct);
+    // console.log(currentProduct);
+    getTheEdit()
     
 
-  },[currentProduct])
+  },[])
 
   return (
     <div className="flex items-center justify-center">
