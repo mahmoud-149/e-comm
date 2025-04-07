@@ -8,7 +8,7 @@ import {
 } from "@material-tailwind/react";
 import { GiShoppingBag } from "react-icons/gi";
 
-const Women = ({ products, addToCart }) => {
+const Womwn = ({ products, addToCart }) => {
   return (
     <div className="min-h-screen bg-gray-100 py-8">
       <div className="container mx-auto px-4">
@@ -16,7 +16,7 @@ const Women = ({ products, addToCart }) => {
           <Link to={"/"} className="hover:text-gray-900">
             Home
           </Link>{" "}
-          / <span className="text-gray-900">Women</span>
+          / <span className="text-gray-900">Womwn</span>
         </nav>
       </div>
 
@@ -28,7 +28,7 @@ const Women = ({ products, addToCart }) => {
 
           <div className="lg:w-[3000px] bg-white p-6 rounded-3xl shadow-md">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold mb-4">Women</h1>
+              <h1 className="text-3xl font-bold mb-4">Womwn</h1>
               <p className="text-gray-600 mb-6">
                 Nam nec tellus a odio tincidunt auctor a ornare odio. Sed non
                 mauris vitae erat consequat auctor eu in elit. Class aptent
@@ -121,4 +121,4 @@ const Women = ({ products, addToCart }) => {
   );
 };
 
-export default Women;
+export default Womwn;
