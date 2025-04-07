@@ -1,5 +1,5 @@
 const ContactUs = () => {
-  return <div></div>;
+  return <div>31231</div>;
 };
 
 export default ContactUs;
