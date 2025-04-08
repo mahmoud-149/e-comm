@@ -61,7 +61,6 @@ const LogIn = () => {
                   label="Username"
                   size="lg"
                   className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
-                  containerProps={{ className: "min-w-[100px]" }}
                 />
               </div>
 
@@ -71,7 +70,6 @@ const LogIn = () => {
                   label="Password"
                   size="lg"
                   className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
-                  containerProps={{ className: "min-w-[100px]" }}
                 />
                 <Typography
                   variant="small"
