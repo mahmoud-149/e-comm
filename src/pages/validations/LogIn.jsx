@@ -6,9 +6,68 @@ import {
   Button,
   Input,
 } from "@material-tailwind/react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router";
+import { useNavigate } from 'react-router';
+import Store from "../../../context/Store";
+import axios from "axios";
 
 const LogIn = () => {
+
+  const{setStatslog,setLoggedin}=useContext(Store);
+  const navigate = useNavigate();
+
+  const [Tryloggeduser, setTryLoggeduser] = useState({
+    email: "",
+    password: "",
+  });
+  const [dbUsers, setDbUsers] = useState();
+
+  const [userLogTry, setUserLogTry] = useState(true);
+
+   const getAllUsers = () => {
+    const URL=import.meta.env.VITE_URL;
+     const confg = {
+       method: "get",
+       url: `${URL}/user`,
+     };
+
+     axios(confg).then((res) => {
+       setDbUsers(res.data);
+     }).catch((e)=>{
+      console.log(e);
+      
+     });
+   };
+
+ const CheckValid = () => {
+   const matchUser = dbUsers.find((usr) => {
+     return (
+       usr.email == Tryloggeduser.email && usr.password == Tryloggeduser.password
+     );
+   });
+   // console.log(matchUser);
+   if (matchUser) {
+      // console.log("true");
+     setStatslog(true);
+     navigate("/");
+     setLoggedin(matchUser);
+     localStorage.id = matchUser.id;
+     setUserLogTry(true);
+   } else {
+     setUserLogTry(false);
+      console.log("noo");
+     // console.log(userLogTry);
+   }
+ };
+
+     useEffect(() => {
+       getAllUsers();
+     }, []);
+     useEffect(() => {
+      //  console.log(Tryloggeduser);
+       
+     }, [Tryloggeduser]);
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-8xl flex-col md:flex-row items-center shadow-xl md:shadow-2xl transition-all duration-300 hover:shadow-3xl">
@@ -47,13 +106,24 @@ const LogIn = () => {
             >
               Welcome Back
             </Typography>
-            <Typography
-              variant="paragraph"
-              color="gray"
-              className="mb-6 md:mb-8 text-sm md:text-base text-center"
-            >
-              Please enter your credentials to access your account
-            </Typography>
+            {userLogTry ? (
+              <Typography
+                variant="paragraph"
+                color="gray"
+                className="mb-6 md:mb-8 text-sm md:text-base text-center"
+              >
+                Please enter your credentials to access your account
+              </Typography>
+            ) : (
+              <Typography
+                variant="paragraph"
+                color="red"
+                className="mb-6 md:mb-8 text-sm md:text-base text-center"
+              >
+                
+                Invaild Username or Password
+              </Typography>
+            )}
 
             <div className="w-full space-y-4 md:space-y-6">
               <div className="group">
@@ -61,6 +131,11 @@ const LogIn = () => {
                   label="Username"
                   size="lg"
                   className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
+
+                 
+                  onChange={(e) => {
+                    setTryLoggeduser({ ...Tryloggeduser, email: e.target.value });
+                  }}
                 />
               </div>
 
@@ -70,6 +145,13 @@ const LogIn = () => {
                   label="Password"
                   size="lg"
                   className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
+
+
+                  
+                  onChange={(e) => {
+                    setTryLoggeduser({ ...Tryloggeduser, password: e.target.value });
+                  }}
+
                 />
                 <Typography
                   variant="small"
@@ -116,6 +198,7 @@ const LogIn = () => {
                 fullWidth
                 size="md"
                 className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg py-2.5 md:py-3 text-sm md:text-base transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
+                onClick={CheckValid}
               >
                 Sign In
               </Button>
@@ -125,6 +208,7 @@ const LogIn = () => {
       </Card>
     </div>
   );
+
 };
 
 export default LogIn;
