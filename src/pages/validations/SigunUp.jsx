@@ -61,7 +61,6 @@ const SignUp = () => {
                   label="Full Name"
                   size="md"
                   className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
-                  containerProps={{ className: "min-w-[100px]" }}
                 />
               </div>
 
@@ -71,7 +70,6 @@ const SignUp = () => {
                   type="email"
                   size="md"
                   className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
-                  containerProps={{ className: "min-w-[100px]" }}
                 />
               </div>
 
@@ -80,7 +78,6 @@ const SignUp = () => {
                   label="Username"
                   size="md"
                   className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
-                  containerProps={{ className: "min-w-[100px]" }}
                 />
               </div>
 
@@ -90,7 +87,6 @@ const SignUp = () => {
                   label="Password"
                   size="md"
                   className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
-                  containerProps={{ className: "min-w-[100px]" }}
                 />
                 <Typography
                   variant="small"
@@ -120,7 +116,6 @@ const SignUp = () => {
                   label="Confirm Password"
                   size="md"
                   className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
-                  containerProps={{ className: "min-w-[100px]" }}
                 />
               </div>
 
