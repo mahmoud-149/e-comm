@@ -7,6 +7,7 @@ import EditProduct from "./../Adminp/Pages/EditProduct";
 import AdminHeader from "../Adminp/Components/AdminHeader";
 import AddProduct from "../Adminp/Pages/AddProduct";
 import Footer from "../components/Footer";
+import ViewUser from "../Adminp/Pages/ViewUser";
 
 const AdminViewLayout = () => {
   return (
@@ -19,10 +20,12 @@ const AdminViewLayout = () => {
         <Route path="productcontrol" element={<ProductControl />} />
         <Route path="productcontrol/addproduct" element={<AddProduct />} />
 
+        <Route path="usercontrol/view/:id" element={<ViewUser />} />
+
         <Route path="productcontrol/view/:id" element={<ViewProduct />} />
         <Route path="productcontrol/edit/:id" element={<EditProduct />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
