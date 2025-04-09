@@ -39,11 +39,7 @@ const ViewProduct = () => {
     <div className="flex justify-center">
       <Card className="w-full flex flex-col md:flex-row ">
         <CardHeader shadow={true} floated={false} className="h-96">
-          <img
-            src={product?.image}
-            alt="card-image"
-            className="object-cover"
-          />
+          <img src={product?.image} alt="card-image" className="object-cover" />
         </CardHeader>
         <CardBody className="flex flex-col justify-around align-middle">
           <div className="mb-2 flex flex-col  items-center justify-between">
@@ -63,14 +59,18 @@ const ViewProduct = () => {
           </Typography>
         </CardBody>
         <CardFooter className="pt-0 flex flex-col justify-center items-center gap-4">
-         
-          <Button
-            ripple={false}
-            fullWidth={true}
-            className=" shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
-          >
-            Edit
-          </Button>
+          <Link to={`/admin/productcontrol/edit/${id}`} className="w-full">
+            <Button
+              ripple={false}
+              fullWidth={true}
+              className=" shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100"
+              // onClick={()=>{
+              //   navigate(`./edit/${id}`)
+              // }}
+            >
+              Edit
+            </Button>
+          </Link>
           <Button
             ripple={false}
             fullWidth={true}
