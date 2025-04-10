@@ -3,7 +3,7 @@ const CheckOut = () => {
     <div>
       <h1>dsd</h1>
       <h2>asd</h2>
-      <h3>oijdfi</h3>
+      <h3>oijdfi </h3>
       <h4>asd</h4>
     </div>
   );
