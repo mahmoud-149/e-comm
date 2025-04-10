@@ -6,7 +6,7 @@ import { Route, Routes } from "react-router";
 import { ThemeProvider } from "@material-tailwind/react";
 import Store from "./../context/Store";
 import axios from "axios";
-import NotFound from './pages/NotFound';
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   const [loggedin, setLoggedin] = useState(); //the user
@@ -22,42 +22,38 @@ const App = () => {
       axios({
         method: "get",
         url: `${URL}/user/${localStorage.id}`,
-      }).then((res) => {
-        setLoggedin(res.data);
-      }).catch((e)=>{
-        console.log(e);
-        
-      });
+      })
+        .then((res) => {
+          setLoggedin(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
   };
   const logOut = () => {
     localStorage.removeItem("id");
     setStatslog(false);
   };
- useEffect(() => {
-   getLogInfo();
+  useEffect(() => {
+    getLogInfo();
 
-   // console.log("callbackend");
- }, [statslog]);
+    // console.log("callbackend");
+  }, [statslog]);
 
- 
   const getTheProducts = async () => {
     const URL = import.meta.env.VITE_URL;
-    try{
-
-     const req= await  axios({
-        method:"get",
-        url:`${URL}/products`
+    try {
+      const req = await axios({
+        method: "get",
+        url: `${URL}/products`,
       });
       setProducts(req.data);
-      setLoading(false)
-
-    }catch(e){
+      setLoading(false);
+    } catch (e) {
       setProducts(e.message);
       setLoading(false);
     }
-
-
 
     // fetch(`${URL}/products`)
     //   .then((response) => response.json())
@@ -157,7 +153,12 @@ const App = () => {
               />
             }
           />
-          <Route path="/admin/*" element={loggedin?.role=="admin"? (<AdminViewLayout />):(<NotFound/>)} />
+          <Route
+            path="/admin/*"
+            element={
+              loggedin?.role == "admin" ? <AdminViewLayout /> : <NotFound />
+            }
+          />
         </Routes>
       </div>
     </Store.Provider>
