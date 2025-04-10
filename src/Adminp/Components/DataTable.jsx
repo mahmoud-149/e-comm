@@ -50,7 +50,7 @@ const handleDelete = (id) => {
 const DataTable = () => {
   const { products } = useContext(Store);
   // const { setProducts } = useContext(Store);
-  useEffect(() => {}, [products]);
+  // useEffect(() => {}, [products]);
 
   return (
     <Card className="h-full w-full overflow-auto ">
