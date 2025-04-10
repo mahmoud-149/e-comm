@@ -48,7 +48,6 @@ const ProductDetails = ({ product, addToCart, onClose }) => {
             </div>
           </div>
 
-          
           <div className="lg:w-1/2">
             <Card className="shadow-lg">
               <CardBody className="p-6">
@@ -91,6 +90,7 @@ const ProductDetails = ({ product, addToCart, onClose }) => {
                       -
                     </Button>
                     <Input
+                      disabled
                       type="number"
                       value={quantity}
                       onChange={(e) =>
@@ -109,7 +109,6 @@ const ProductDetails = ({ product, addToCart, onClose }) => {
                   </div>
                 </div>
 
-                
                 <Button
                   fullWidth
                   className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 mb-6"
@@ -119,7 +118,6 @@ const ProductDetails = ({ product, addToCart, onClose }) => {
                   Add to Cart
                 </Button>
 
-                
                 <div className="border-t border-gray-200 pt-6">
                   <Typography variant="h5" className="font-semibold mb-2">
                     Product Details
