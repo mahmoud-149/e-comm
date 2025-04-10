@@ -2,11 +2,12 @@ import AdminViewLayout from "./layouts/AdminViewLayout";
 
 import { useEffect, useState } from "react";
 import UserViewLayout from "./layouts/UserViewLayout";
-import { Route, Routes } from "react-router";
+import { Route, Routes, useParams, useNavigate } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 import Store from "./../context/Store";
 import axios from "axios";
 import NotFound from './pages/NotFound';
+import ProductDetails from './pages/ProductDetails';
 
 const App = () => {
   const [loggedin, setLoggedin] = useState(); //the user
@@ -157,10 +158,30 @@ const App = () => {
               />
             }
           />
+          <Route
+            path="/products/:id"
+            element={<ProductDetailsWrapper products={products} addToCart={addToCart} />}
+          />
           <Route path="/admin/*" element={loggedin?.role=="admin"? (<AdminViewLayout />):(<NotFound/>)} />
         </Routes>
       </div>
     </Store.Provider>
+  );
+};
+
+const ProductDetailsWrapper = ({ products, addToCart }) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const product = products.find(p => p.id === parseInt(id));
+
+  if (!product) return <div>Product not found</div>;
+
+  return (
+    <ProductDetails
+      addToCart={addToCart}
+      product={product}
+      onClose={() => navigate()}
+    />
   );
 };
 
