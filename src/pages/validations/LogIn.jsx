@@ -131,7 +131,8 @@ const LogIn = () => {
                   label="Username"
                   size="lg"
                   className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
-                  containerProps={{ className: "min-w-[100px]" }}
+
+                 
                   onChange={(e) => {
                     setTryLoggeduser({ ...Tryloggeduser, email: e.target.value });
                   }}
@@ -144,10 +145,13 @@ const LogIn = () => {
                   label="Password"
                   size="lg"
                   className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
-                  containerProps={{ className: "min-w-[100px]" }}
+
+
+                  
                   onChange={(e) => {
                     setTryLoggeduser({ ...Tryloggeduser, password: e.target.value });
                   }}
+
                 />
                 <Typography
                   variant="small"
