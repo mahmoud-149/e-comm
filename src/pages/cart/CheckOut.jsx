@@ -65,7 +65,7 @@ const CheckOut = ({ cartItems, clearCart }) => {
     const newErrors = {};
     let isValid = true;
 
-    inpList.forEach((field) => {
+    inpList.map((field) => {
       if (!formData[field.input].trim()) {
         newErrors[field.input] = `${field.label} is required`;
         isValid = false;
@@ -170,9 +170,6 @@ const CheckOut = ({ cartItems, clearCart }) => {
                   className={`!border ${
                     errors[inp.input] ? "!border-red-500" : "!border-gray-200"
                   } bg-white text-gray-900 shadow-sm placeholder:text-gray-400 focus:!border-gray-900 focus:ring-2 focus:ring-blue-500`}
-                  labelProps={{
-                    className: "text-gray-700 font-medium",
-                  }}
                   required
                 />
                 {errors[inp.input] && (
