@@ -158,10 +158,6 @@ const App = () => {
               />
             }
           />
-          <Route
-            path="/products/:id"
-            element={<ProductDetailsWrapper products={products} addToCart={addToCart} />}
-          />
           <Route path="/admin/*" element={loggedin?.role=="admin"? (<AdminViewLayout />):(<NotFound/>)} />
         </Routes>
       </div>
@@ -180,7 +176,7 @@ const ProductDetailsWrapper = ({ products, addToCart }) => {
     <ProductDetails
       addToCart={addToCart}
       product={product}
-      onClose={() => navigate()}
+      onClose={() => navigate(-1)}
     />
   );
 };
