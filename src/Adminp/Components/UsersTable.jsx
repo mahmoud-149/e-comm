@@ -8,9 +8,10 @@ import Store from "../../../context/Store";
 const TABLE_HEAD = ["name", "email", "Id", "Role", "Action"];
 
 const UsersTable = () => {
+  const {allUsers,setAllUsers}=useContext(Store)
         const URL = import.meta.env.VITE_URL;
 
-  const [allUsers, setAllUsers] = useState([]);
+  // const [allUsers, setAllUsers] = useState([]);
     const [gotChange,setGotChange]=useState(false);
 
   const getAllUsers = async () => {
@@ -39,7 +40,6 @@ const UsersTable = () => {
     const saveTheEdit=async (changeduserId)=>{
         // const URL = import.meta.env.VITE_URL;
         try{
-
            await axios({
              method: "patch", //there is put for change all the object and "patch " for only the key
              url: `${URL}/user/${changeduserId}`,
@@ -123,7 +123,7 @@ const UsersTable = () => {
           </tr>
         </thead>
         <tbody>
-          {allUsers.map(({ name, email, id, role }, index) => {
+          {allUsers?.map(({ name, email, id, role }, index) => {
             const isLast = index === allUsers.length - 1;
             const classes = isLast
               ? "p-4 "

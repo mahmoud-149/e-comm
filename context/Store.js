@@ -5,8 +5,11 @@ const Store = createContext({
   loggedin: {}, //the user success log
   statslog: false,
   logOut: undefined,
-  setLoggedin: undefined, 
-  setStatslog:undefined,
+  setLoggedin: undefined,
+  setStatslog: undefined,
+  allUsers: [],
+  setAllUsers: undefined,
+  getAllUsers:undefined,
 });
 
 export default Store;
