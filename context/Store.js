@@ -13,6 +13,11 @@ const Store = createContext({
   logOut: undefined,
   setLoggedin: undefined,
   setStatslog: undefined,
+
+  allUsers: [],
+  setAllUsers: undefined,
+  getAllUsers:undefined,
+
 });
 
 export default Store;
