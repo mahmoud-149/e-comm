@@ -134,6 +134,7 @@ console.log("back");
                 Please fill in your details to create your account
               </Typography>
 
+
               <div className="w-full space-y-4 md:space-y-6">
                 <div className="group">
                   <Input
@@ -165,14 +166,18 @@ console.log("back");
                   />
                 </div>
 
+
                 {/* <div className="group">
                 <Input
+
                 label="Username"
                 size="md"
                 className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
                 containerProps={{ className: "min-w-[100px]" }}
+
                 />
                 </div> */}
+
 
                 <div className="group">
                   <Input
@@ -193,6 +198,7 @@ console.log("back");
                     variant="small"
                     color="gray"
                     className="mt-2 text-xs md:text-sm flex items-center gap-1 font-normal"
+
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -209,6 +215,7 @@ console.log("back");
                     Use at least 8 characters
                   </Typography>
                 </div>
+
 
                 <div className="group">
                   <Input
@@ -237,6 +244,7 @@ console.log("back");
                     Already have an account?
                   </Typography>
                 </div>
+
 
                 <Button
                   type="submit"
