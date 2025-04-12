@@ -22,12 +22,33 @@
       "role": "user"
     },
     {
-    "name": "mmn",
-    "email": "mnn",
-    "password": "mmmn",
-    "id": 4,
-    "role": "user"
-  }
+      "name": "mmn",
+      "email": "mnn",
+      "password": "mmmn",
+      "id": 4,
+      "role": "user"
+    },
+    {
+      "name": "mm",
+      "email": "mad@gm.com",
+      "password": "mody",
+      "id": 5,
+      "role": "user"
+    },
+    {
+      "name": "mmm",
+      "email": "mody@gmail.com",
+      "password": "12345678",
+      "id": 6,
+      "role": "user"
+    },
+    {
+      "name": "modd",
+      "email": "modd@gm.com",
+      "password": "12345678",
+      "role": "user",
+      "id": 7
+    }
   ],
   "products": [
     {

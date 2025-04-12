@@ -16,6 +16,8 @@ const App = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [allUsers, setAllUsers] = useState([]);
+
   const getLogInfo = () => {
     if (localStorage.id) {
       const URL = import.meta.env.VITE_URL; // to secure the data base in real projects
@@ -75,6 +77,14 @@ const App = () => {
     getTheProducts();
   }, [products]);
 
+  const getAllUsers = async () => {
+    const URL = import.meta.env.VITE_URL;
+    const req = await axios({
+      method: "get",
+      url: `${URL}/user`,
+    });
+    setAllUsers(req.data);
+  };
   const addToCart = (product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
@@ -139,6 +149,9 @@ const App = () => {
         logOut,
         setLoggedin,
         setStatslog,
+        allUsers,
+        setAllUsers,
+        getAllUsers,
       }}
     >
       <div>
@@ -157,7 +170,12 @@ const App = () => {
               />
             }
           />
-          <Route path="/admin/*" element={loggedin?.role=="admin"? (<AdminViewLayout />):(<NotFound/>)} />
+          <Route
+            path="/admin/*"
+            element={
+              loggedin?.role == "admin" ? <AdminViewLayout /> : <NotFound />
+            }
+          />
         </Routes>
       </div>
     </Store.Provider>
