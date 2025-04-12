@@ -6,6 +6,7 @@ import { Avatar } from "@material-tailwind/react";
 const MyProfile = () => {
   const { loggedin } = useContext(Store);
 
+
   const getInitials = (name) => {
     if (!name) return "U";
     const names = name.split(" ");
@@ -73,6 +74,7 @@ const MyProfile = () => {
       </div>
     </div>
   );
+
 };
 
 export default MyProfile;
