@@ -55,6 +55,7 @@ const ProductDetails = ({ product, addToCart, onClose }) => {
             </div>
           </div>
 
+
           <div className="w-full lg:w-1/2">
             <Card className="shadow-none">
               <CardBody className="p-2 sm:p-4">
@@ -62,6 +63,7 @@ const ProductDetails = ({ product, addToCart, onClose }) => {
                   variant="h2"
                   className="text-xl sm:text-2xl font-bold mb-2"
                 >
+
                   {product.title}
                 </Typography>
 
@@ -108,6 +110,7 @@ const ProductDetails = ({ product, addToCart, onClose }) => {
                       -
                     </Button>
                     <Input
+                      disabled
                       type="number"
                       value={quantity}
                       onChange={(e) => {
@@ -141,11 +144,13 @@ const ProductDetails = ({ product, addToCart, onClose }) => {
                   Add to Cart
                 </Button>
 
+
                 <div className="border-t border-gray-200 pt-4">
                   <Typography
                     variant="h5"
                     className="text-sm sm:text-base font-semibold mb-2"
                   >
+
                     Product Details
                   </Typography>
                   <ul className="list-disc pl-5 text-sm text-gray-700 space-y-1">

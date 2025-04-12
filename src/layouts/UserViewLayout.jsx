@@ -69,7 +69,10 @@ const UserViewLayout = ({
               />
             }
           />
-          <Route path="/checkout" element={<CheckOut />} />
+          <Route
+            path="/checkout"
+            element={<CheckOut cartItems={cartItems} clearCart={clearCart} />}
+          />
         </Routes>
       </main>
 

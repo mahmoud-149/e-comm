@@ -1,13 +1,15 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import AdminViewLayout from "./layouts/AdminViewLayout";
 
 import { useEffect, useState } from "react";
 import UserViewLayout from "./layouts/UserViewLayout";
-import { Route, Routes, useParams, useNavigate } from "react-router-dom";
+import { Route, Routes, useParams, useNavigate } from "react-router";
 import { ThemeProvider } from "@material-tailwind/react";
 import Store from "./../context/Store";
 import axios from "axios";
-import NotFound from './pages/NotFound';
-import ProductDetails from './pages/ProductDetails';
+import NotFound from "./pages/NotFound";
+import ProductDetails from "./pages/ProductDetails";
 
 const App = () => {
   const [loggedin, setLoggedin] = useState(); //the user
@@ -15,7 +17,6 @@ const App = () => {
 
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const getLogInfo = () => {
     if (localStorage.id) {
@@ -23,42 +24,36 @@ const App = () => {
       axios({
         method: "get",
         url: `${URL}/user/${localStorage.id}`,
-      }).then((res) => {
-        setLoggedin(res.data);
-      }).catch((e)=>{
-        console.log(e);
-        
-      });
+      })
+        .then((res) => {
+          setLoggedin(res.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
   };
   const logOut = () => {
     localStorage.removeItem("id");
     setStatslog(false);
   };
- useEffect(() => {
-   getLogInfo();
+  useEffect(() => {
+    getLogInfo();
 
-   // console.log("callbackend");
- }, [statslog]);
+    // console.log("callbackend");
+  }, [statslog]);
 
- 
   const getTheProducts = async () => {
     const URL = import.meta.env.VITE_URL;
-    try{
-
-     const req= await  axios({
-        method:"get",
-        url:`${URL}/products`
+    try {
+      const req = await axios({
+        method: "get",
+        url: `${URL}/products`,
       });
       setProducts(req.data);
-      setLoading(false)
-
-    }catch(e){
+    } catch (e) {
       setProducts(e.message);
-      setLoading(false);
     }
-
-
 
     // fetch(`${URL}/products`)
     //   .then((response) => response.json())
@@ -126,10 +121,6 @@ const App = () => {
     setCartItems([]);
   };
 
-  if (loading) {
-    return <div>Loading products...</div>;
-  }
-
   return (
     <Store.Provider
       value={{
@@ -158,7 +149,23 @@ const App = () => {
               />
             }
           />
-          <Route path="/admin/*" element={loggedin?.role=="admin"? (<AdminViewLayout />):(<NotFound/>)} />
+
+          <Route
+            path="/products/:id"
+            element={
+              <ProductDetailsWrapper
+                products={products}
+                addToCart={addToCart}
+              />
+            }
+          />
+          <Route
+            path="/admin/*"
+            element={
+              loggedin?.role == "admin" ? <AdminViewLayout /> : <NotFound />
+            }
+          />
+
         </Routes>
       </div>
     </Store.Provider>
@@ -168,7 +175,7 @@ const App = () => {
 const ProductDetailsWrapper = ({ products, addToCart }) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const product = products.find(p => p.id === parseInt(id));
+  const product = products.find((p) => p.id === parseInt(id));
 
   if (!product) return <div>Product not found</div>;
 

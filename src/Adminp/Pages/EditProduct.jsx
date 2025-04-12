@@ -11,7 +11,7 @@ import {
   Alert,
 } from "@material-tailwind/react";
 const EditProduct = () => {
-   const {id}=useParams();
+  const { id } = useParams();
   const [currentProduct, setCurrentProduct] = useState({
     title: "",
     price: "",
@@ -24,7 +24,7 @@ const EditProduct = () => {
     },
   });
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const getTheEdit = async () => {
     const URL = import.meta.env.VITE_URL;
     const req = await axios({
@@ -32,7 +32,7 @@ const EditProduct = () => {
       url: `${URL}/products/${id}`,
     });
     setCurrentProduct(req.data);
-        // console.log(req.data);
+    // console.log(req.data);
   };
   const postTheEdit = () => {
     try {
@@ -49,12 +49,10 @@ const EditProduct = () => {
       console.log(e.message);
     }
   };
-  useEffect(()=>{
+  useEffect(() => {
     // console.log(currentProduct);
-    getTheEdit()
-    
-
-  },[])
+    getTheEdit();
+  }, []);
 
   return (
     <div className="flex items-center justify-center">
@@ -69,7 +67,7 @@ const EditProduct = () => {
             e.preventDefault();
           }}
         >
-           <div className="mb-1 flex flex-col gap-6">
+          <div className="mb-1 flex flex-col gap-6">
             <Typography variant="h6" color="blue-gray" className="-mb-3">
               Title
             </Typography>
@@ -154,7 +152,7 @@ const EditProduct = () => {
               }}
               value={currentProduct?.price}
             />
-          </div> 
+          </div>
 
           {/*Object.keys(currentProduct).map((x,y)=>{
             return (
