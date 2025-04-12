@@ -162,6 +162,7 @@ const App = () => {
               />
             }
           />
+
           <Route
 
             path="/products/:id"
@@ -179,6 +180,7 @@ const App = () => {
               loggedin?.role == "admin" ? <AdminViewLayout /> : <NotFound />
             }
           />
+
         </Routes>
       </div>
     </Store.Provider>
@@ -196,7 +198,7 @@ const ProductDetailsWrapper = ({ products, addToCart }) => {
     <ProductDetails
       addToCart={addToCart}
       product={product}
-      onClose={() => navigate()}
+      onClose={() => navigate(-1)}
     />
   );
 };
