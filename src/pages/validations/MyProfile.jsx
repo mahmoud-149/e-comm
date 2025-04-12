@@ -4,7 +4,7 @@ import Store from "../../../context/Store";
 const MyProfile = () => {
   const { loggedin } = useContext(Store);
 
-  return <div>{loggedin.name} Profile</div>;
+  return <div>{loggedin.name} Profilee </div>;
 };
 
 export default MyProfile;
