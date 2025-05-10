@@ -125,7 +125,7 @@ const Men = ({ products, addToCart }) => {
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
               {filteredProducts.map((product) => (
                 <Card
-                  key={product.id}
+                  key={product}
                   className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full"
                   onClick={() => setSelectedProduct(product)}
                 >
@@ -139,16 +139,7 @@ const Men = ({ products, addToCart }) => {
                       alt={product.title}
                       className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute top-4 right-4">
-                      <Button
-                        size="sm"
-                        color="white"
-                        className="rounded-full p-2 bg-white/90 backdrop-blur-sm shadow-lg hover:scale-110"
-                        onClick={() => addToCart(product)}
-                      >
-                        <GiShoppingBag size={18} />
-                      </Button>
-                    </div>
+                    <div className="absolute top-4 right-4"></div>
                   </CardHeader>
                   <CardBody className="pt-2 pb-4 px-4">
                     <div className="flex justify-between items-start mb-2">

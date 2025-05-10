@@ -47,20 +47,6 @@ const MyProfile = () => {
             {loggedin?.email || "example@gmail.com"}
           </p>
         </div>
-
-        <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-MainButton">
-          <h3 className="text-md font-semibold text-MainText mb-2">Phone</h3>
-          <p className="text-gray-800 text-xl">
-            {loggedin?.phone || "+0123-456-789"}
-          </p>
-        </div>
-
-        <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-MainButton">
-          <h3 className="text-md font-semibold text-MainText mb-2">Gender</h3>
-          <p className="text-gray-800 text-xl">
-            {loggedin?.gender || "Not Specified"}
-          </p>
-        </div>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 justify-center mt-10">

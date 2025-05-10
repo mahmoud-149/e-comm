@@ -9,8 +9,11 @@ import {
 import { Link } from "react-router";
 import { BiSolidLock, BiSolidOffer, BiWorld } from "react-icons/bi";
 import { GiClothesline, GiShoppingBag } from "react-icons/gi";
+import { useState } from "react";
+import ProductDetails from "./ProductDetails";
 
 const Home = ({ products, addToCart }) => {
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const CategoryCard = ({ image, title, subtitle, to }) => (
     <Card className="relative h-96 overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
       <CardHeader
@@ -146,10 +149,10 @@ const Home = ({ products, addToCart }) => {
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
             {products.map((product) => (
-            
-             <Card
+              <Card
                 key={product.id}
                 className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full hover:-translate-y-1"
+                onClick={() => setSelectedProduct(product)}
               >
                 <CardHeader
                   floated={false}
@@ -162,16 +165,7 @@ const Home = ({ products, addToCart }) => {
                     className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                  <div className="absolute inset-0 right-4 top-4">
-                    <Button
-                      size="sm"
-                      color="white"
-                      className="rounded-full p-2 bg-white/90 backdrop-blur-sm hover:bg-white text-black shadow-lg hover:scale-110 transition-transform"
-                      onClick={() => addToCart(product)}
-                    >
-                      <GiShoppingBag size={18} />
-                    </Button>
-                  </div>
+                  <div className="absolute inset-0 right-4 top-4"></div>
                 </CardHeader>
                 <CardBody className="pt-2 pb-4 px-4">
                   <div className="flex justify-between items-start mb-2">
@@ -269,6 +263,13 @@ const Home = ({ products, addToCart }) => {
           </div>
         </div>
       </section>
+      {selectedProduct && (
+        <ProductDetails
+          product={selectedProduct}
+          addToCart={addToCart}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </div>
   );
 };
