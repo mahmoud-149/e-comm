@@ -10,21 +10,20 @@ import { GiShoppingBag } from "react-icons/gi";
 import { useState } from "react";
 import ProductDetails from "./ProductDetails";
 
-
 const Everything = ({ products, addToCart }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const initialMaxPrice = Math.max(...products.map(p => p.price));
-  const [searchTerm, setSearchTerm] = useState('');
+  const initialMaxPrice = Math.max(...products.map((p) => p.price));
+  const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
 
-  const filteredProducts = products.filter(product => 
-    product.price >= minPrice && 
-    product.price <= maxPrice && 
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProducts = products.filter(
+    (product) =>
+      product.price >= minPrice &&
+      product.price <= maxPrice &&
+      product.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  
   const handleSearch = (value) => setSearchTerm(value);
   const handleMinPrice = (value) => setMinPrice(Number(value));
   const handleMaxPrice = (value) => setMaxPrice(Number(value));
@@ -42,11 +41,13 @@ const Everything = ({ products, addToCart }) => {
 
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-8">
-        
           <div className="lg:w-1/4 bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-            
             <div className="mb-8">
-              <Typography variant="h5" color="blue-gray" className="mb-4 font-semibold">
+              <Typography
+                variant="h5"
+                color="blue-gray"
+                className="mb-4 font-semibold"
+              >
                 Search Products
               </Typography>
               <div className="relative flex w-full">
@@ -60,15 +61,20 @@ const Everything = ({ products, addToCart }) => {
               </div>
             </div>
 
-
             <div className="mb-8">
-              <Typography variant="h5" color="blue-gray" className="mb-4 font-semibold">
+              <Typography
+                variant="h5"
+                color="blue-gray"
+                className="mb-4 font-semibold"
+              >
                 Filter by Price
               </Typography>
               <div className="space-y-4">
                 <div className="flex gap-3">
                   <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-700">Min ($)</label>
+                    <label className="text-sm font-medium text-gray-700">
+                      Min ($)
+                    </label>
                     <input
                       type="number"
                       value={minPrice}
@@ -77,7 +83,9 @@ const Everything = ({ products, addToCart }) => {
                     />
                   </div>
                   <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-700">Max ($)</label>
+                    <label className="text-sm font-medium text-gray-700">
+                      Max ($)
+                    </label>
                     <input
                       type="number"
                       value={maxPrice}
@@ -101,15 +109,16 @@ const Everything = ({ products, addToCart }) => {
             </div>
           </div>
 
-          
           <div className="lg:w-3/4 bg-white p-6 rounded-3xl shadow-md">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold mb-4">Everythin</h1>
+              <h1 className="text-3xl font-bold mb-4">Everything</h1>
               <p className="text-gray-600 mb-6">
-                Explore our premium collection of Men's & Women's fashion 
+                Explore our premium collection of Men's & Women's fashion
               </p>
               <div className="flex justify-between items-center">
-                <p className="text-gray-600">Showing {filteredProducts.length} results</p>
+                <p className="text-gray-600">
+                  Showing {filteredProducts.length} results
+                </p>
               </div>
             </div>
 
@@ -130,16 +139,7 @@ const Everything = ({ products, addToCart }) => {
                       alt={product.title}
                       className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute top-4 right-4">
-                      <Button
-                        size="sm"
-                        color="white"
-                        className="rounded-full p-2 bg-white/90 backdrop-blur-sm shadow-lg hover:scale-110"
-                        onClick={() => addToCart(product)}
-                      >
-                        <GiShoppingBag size={18} />
-                      </Button>
-                    </div>
+                    <div className="absolute top-4 right-4"></div>
                   </CardHeader>
                   <CardBody className="pt-2 pb-4 px-4">
                     <div className="flex justify-between items-start mb-2">
@@ -178,7 +178,7 @@ const Everything = ({ products, addToCart }) => {
       </div>
 
       {selectedProduct && (
-        <ProductDetails 
+        <ProductDetails
           product={selectedProduct}
           addToCart={addToCart}
           onClose={() => setSelectedProduct(null)}

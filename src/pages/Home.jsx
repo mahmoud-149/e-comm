@@ -9,8 +9,45 @@ import {
 import { Link } from "react-router";
 import { BiSolidLock, BiSolidOffer, BiWorld } from "react-icons/bi";
 import { GiClothesline, GiShoppingBag } from "react-icons/gi";
+import { useState } from "react";
+import ProductDetails from "./ProductDetails";
 
 const Home = ({ products, addToCart }) => {
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const CategoryCard = ({ image, title, subtitle, to }) => (
+    <Card className="relative h-96 overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
+      <CardHeader
+        floated={false}
+        className="h-full w-full transform transition-transform duration-500 group-hover:scale-105"
+      >
+        <img src={image} alt={title} className="h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+      </CardHeader>
+
+      <CardBody className="absolute bottom-0 w-full text-center space-y-4">
+        <Typography variant="h3" className="text-2xl font-bold text-white">
+          {title}
+        </Typography>
+        <Typography as={"div"} className="flex flex-col gap-3">
+          <Typography className="text-gray-200 font-medium">
+            {subtitle}
+          </Typography>
+          <Link to={to}>
+            <Button
+              variant="filled"
+              color="white"
+              className="text-black rounded-full px-8 py-2 hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            >
+              Shop Now
+            </Button>
+          </Link>
+        </Typography>
+      </CardBody>
+    </Card>
+  );
+
+
   return (
     <div className="flex flex-col gap-16 px-4 md:px-8 lg:px-16 py-12 bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
@@ -175,7 +212,10 @@ const Home = ({ products, addToCart }) => {
             {products.map((product) => (
               <Card
                 key={product.id}
-                className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full hover:-translate-y-2 border border-gray-100"
+
+                className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full hover:-translate-y-1"
+                onClick={() => setSelectedProduct(product)}
+
               >
                 <CardHeader
                   floated={false}
@@ -188,16 +228,7 @@ const Home = ({ products, addToCart }) => {
                     className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                  <div className="absolute inset-0 right-4 top-4">
-                    <Button
-                      size="sm"
-                      color="white"
-                      className="rounded-full p-2 bg-white/90 backdrop-blur-sm hover:bg-white text-black shadow-lg hover:scale-110 transition-transform"
-                      onClick={() => addToCart(product)}
-                    >
-                      <GiShoppingBag size={18} />
-                    </Button>
-                  </div>
+                  <div className="absolute inset-0 right-4 top-4"></div>
                 </CardHeader>
                 <CardBody className="pt-2 pb-4 px-4">
                   <div className="flex justify-between items-start mb-2">
@@ -303,6 +334,13 @@ const Home = ({ products, addToCart }) => {
           </div>
         </div>
       </section>
+      {selectedProduct && (
+        <ProductDetails
+          product={selectedProduct}
+          addToCart={addToCart}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </div>
   );
 };
