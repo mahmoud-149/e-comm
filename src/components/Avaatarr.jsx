@@ -83,7 +83,7 @@ return (
         let   gotaccess=true;
         if(dashboard)
         {
-              gotaccess=(loggedin.role=="admin")?true:false;   
+              gotaccess=(loggedin?.role=="admin")?true:false;   
         }
         if(gotaccess)
         return (
