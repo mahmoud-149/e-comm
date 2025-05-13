@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import Store from "../../../context/Store";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import { FiCamera } from "react-icons/fi";
 import { Avatar } from "@material-tailwind/react";
 

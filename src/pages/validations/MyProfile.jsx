@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Store from "../../../context/Store";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Avatar } from "@material-tailwind/react";
 
 const MyProfile = () => {
