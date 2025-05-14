@@ -12,19 +12,19 @@ import { GiShoppingBag } from "react-icons/gi";
 import { useState } from "react";
 import ProductDetails from "./ProductDetails";
 
-const Women = ({ products, addToCart }) => {
+const Women = ({ womenProducts, addToCart }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const initialMaxPrice = Math.max(...products.map((p) => p.price));
+  const initialMaxPrice = Math.max(...womenProducts.map((p) => p.price));
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
 
-  const filteredProducts = products.filter(
-    (product) =>
-      product.price >= minPrice &&
-      product.price <= maxPrice &&
-      product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredProducts = products.filter(
+  //   (product) =>
+  //     product.price >= minPrice &&
+  //     product.price <= maxPrice &&
+  //     product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   const handleSearch = (value) => setSearchTerm(value);
   const handleMinPrice = (value) => setMinPrice(Number(value));
@@ -119,15 +119,15 @@ const Women = ({ products, addToCart }) => {
               </p>
               <div className="flex justify-between items-center">
                 <p className="text-gray-600">
-                  Showing {filteredProducts.length} results
+                  Showing {womenProducts.length} results
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-              {filteredProducts.map((product) => (
+              {womenProducts.map((product) => (
                 <Card
-                  key={product.id}
+                  key={product._id}
                   className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full"
                   onClick={() => setSelectedProduct(product)}
                 >
