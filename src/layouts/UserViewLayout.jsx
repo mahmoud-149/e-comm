@@ -23,6 +23,8 @@ const UserViewLayout = ({
   updateCartItemQuantity,
   clearCart,
   deleteItem,
+  menProducts,
+  womenProducts,
 }) => {
   return (
     <div className="flex flex-col min-h-screen">
@@ -45,11 +47,23 @@ const UserViewLayout = ({
           />
           <Route
             path="/women"
-            element={<Women products={products} addToCart={addToCart} />}
+            element={
+              <Women
+                products={products}
+                addToCart={addToCart}
+                womenProducts={womenProducts}
+              />
+            }
           />
           <Route
             path="/men"
-            element={<Men products={products} addToCart={addToCart} />}
+            element={
+              <Men
+                products={products}
+                addToCart={addToCart}
+                menProducts={menProducts}
+              />
+            }
           />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />

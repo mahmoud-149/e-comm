@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import {
@@ -12,13 +13,13 @@ import { IoMdLogIn, IoMdCart } from "react-icons/io";
 import { Link, useLocation } from "react-router";
 import { FaBars, FaRegCircleXmark, FaTrash } from "react-icons/fa6";
 import { Avatar } from "@material-tailwind/react";
-import { useContext } from 'react';
+import { useContext } from "react";
 import Store from "../../context/Store";
 import Avaatarr from "./Avaatarr";
 
 function NavList({ openDrawerRight, cartItemsCount }) {
   const location = useLocation();
-  const { statslog} = useContext(Store);
+  const { statslog } = useContext(Store);
 
   const navItems = [
     { path: "/men", label: "Men" },
@@ -49,7 +50,7 @@ function NavList({ openDrawerRight, cartItemsCount }) {
         </Typography>
       ))}
       {statslog ? (
-        <Avaatarr/>
+        <Avaatarr />
       ) : (
         <Typography
           as="li"
@@ -217,7 +218,7 @@ const Header = ({ cartItems, updateCartItemQuantity, deleteItem }) => {
             <div className="mb-4 space-y-4 max-h-96 overflow-y-auto">
               {cartItems.map((item) => (
                 <div
-                  key={item.id}
+                  key={item._id}
                   className="flex items-center gap-4 p-2 bg-blue-gray-50 rounded-lg"
                 >
                   <img
