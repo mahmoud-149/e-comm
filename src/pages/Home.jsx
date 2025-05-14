@@ -174,7 +174,7 @@ const Home = ({ products, addToCart }) => {
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
             {products.map((product) => (
               <Card
-                key={product.id}
+                key={product._id}
                 className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full hover:-translate-y-2 border border-gray-100"
               >
                 <CardHeader

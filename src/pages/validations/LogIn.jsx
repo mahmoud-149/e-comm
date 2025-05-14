@@ -20,7 +20,7 @@ const LogIn = () => {
     email: "",
     password: "",
   });
-  const [dbUsers, setDbUsers] = useState();
+  const [dbUsers, setDbUsers] = useState([]);
 
   const [userLogTry, setUserLogTry] = useState(true);
 
@@ -28,12 +28,12 @@ const LogIn = () => {
     const URL = import.meta.env.VITE_URL;
     const confg = {
       method: "get",
-      url: `${URL}/user`,
+      url: `${URL}/api/users`,
     };
 
     axios(confg)
       .then((res) => {
-        setDbUsers(res.data);
+        setDbUsers(res?.data.data);
       })
       .catch((e) => {
         console.log(e);

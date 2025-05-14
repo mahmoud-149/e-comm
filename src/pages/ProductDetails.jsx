@@ -1,10 +1,10 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import {
   Card,
   CardBody,
   Typography,
   Button,
-  Rating,
   Input,
   IconButton,
 } from "@material-tailwind/react";
@@ -56,7 +56,7 @@ const ProductDetails = ({ product, addToCart, onClose }) => {
                 </Typography>
 
                 <div className="flex items-center gap-2 mb-4">
-                  <Rating value={Math.floor(product.rating.rate)} readonly />
+                  {/* <Rating value={Math.floor(product.rating.rate)} readonly /> */}
                   <Typography className="text-sm text-gray-600">
                     ({product.rating.count} reviews)
                   </Typography>

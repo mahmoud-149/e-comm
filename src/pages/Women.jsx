@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router";
 import {
   Card,
@@ -10,20 +11,20 @@ import { GiShoppingBag } from "react-icons/gi";
 import { useState } from "react";
 import ProductDetails from "./ProductDetails";
 
-const Women = ({ products, addToCart }) => {
+const Women = ({ womenProducts, addToCart }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const initialMaxPrice = Math.max(...products.map(p => p.price));
-  const [searchTerm, setSearchTerm] = useState('');
+  const initialMaxPrice = Math.max(...womenProducts.map((p) => p.price));
+  const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
 
-  const filteredProducts = products.filter(product => 
-    product.price >= minPrice && 
-    product.price <= maxPrice && 
-    product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredProducts = womenProducts.filter(
+  //   (product) =>
+  //     product.price >= minPrice &&
+  //     product.price <= maxPrice &&
+  //     product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
-  
   const handleSearch = (value) => setSearchTerm(value);
   const handleMinPrice = (value) => setMinPrice(Number(value));
   const handleMaxPrice = (value) => setMaxPrice(Number(value));
@@ -41,11 +42,13 @@ const Women = ({ products, addToCart }) => {
 
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-8">
-
           <div className="lg:w-1/4 bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-            
             <div className="mb-8">
-              <Typography variant="h5" color="blue-gray" className="mb-4 font-semibold">
+              <Typography
+                variant="h5"
+                color="blue-gray"
+                className="mb-4 font-semibold"
+              >
                 Search Products
               </Typography>
               <div className="relative flex w-full">
@@ -60,13 +63,19 @@ const Women = ({ products, addToCart }) => {
             </div>
 
             <div className="mb-8">
-              <Typography variant="h5" color="blue-gray" className="mb-4 font-semibold">
+              <Typography
+                variant="h5"
+                color="blue-gray"
+                className="mb-4 font-semibold"
+              >
                 Filter by Price
               </Typography>
               <div className="space-y-4">
                 <div className="flex gap-3">
                   <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-700">Min ($)</label>
+                    <label className="text-sm font-medium text-gray-700">
+                      Min ($)
+                    </label>
                     <input
                       type="number"
                       value={minPrice}
@@ -75,7 +84,9 @@ const Women = ({ products, addToCart }) => {
                     />
                   </div>
                   <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-700">Max ($)</label>
+                    <label className="text-sm font-medium text-gray-700">
+                      Max ($)
+                    </label>
                     <input
                       type="number"
                       value={maxPrice}
@@ -99,22 +110,23 @@ const Women = ({ products, addToCart }) => {
             </div>
           </div>
 
-          
           <div className="lg:w-3/4 bg-white p-6 rounded-3xl shadow-md">
             <div className="mb-8">
               <h1 className="text-3xl font-bold mb-4">Women</h1>
               <p className="text-gray-600 mb-6">
-                Explore our premium collection of Women's fashion 
+                Explore our premium collection of Women&aspos;s fashion
               </p>
               <div className="flex justify-between items-center">
-                <p className="text-gray-600">Showing {filteredProducts.length} results</p>
+                <p className="text-gray-600">
+                  Showing {womenProducts.length} results
+                </p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-              {filteredProducts.map((product) => (
+              {womenProducts.map((product) => (
                 <Card
-                  key={product.id}
+                  key={product._id}
                   className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full"
                   onClick={() => setSelectedProduct(product)}
                 >
@@ -176,7 +188,7 @@ const Women = ({ products, addToCart }) => {
       </div>
 
       {selectedProduct && (
-        <ProductDetails 
+        <ProductDetails
           product={selectedProduct}
           addToCart={addToCart}
           onClose={() => setSelectedProduct(null)}

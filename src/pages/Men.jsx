@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router";
 import {
   Card,
@@ -10,19 +11,19 @@ import { GiShoppingBag } from "react-icons/gi";
 import { useState } from "react";
 import ProductDetails from "./ProductDetails";
 
-const Men = ({ products, addToCart }) => {
+const Men = ({ menProducts, addToCart }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const initialMaxPrice = Math.max(...products.map((p) => p.price));
+  const initialMaxPrice = Math.max(...menProducts.map((p) => p.price));
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
 
-  const filteredProducts = products.filter(
-    (product) =>
-      product.price >= minPrice &&
-      product.price <= maxPrice &&
-      product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredProducts = menProducts.filter(
+  //   (product) =>
+  //     product.price >= minPrice &&
+  //     product.price <= maxPrice &&
+  //     product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   const handleSearch = (value) => setSearchTerm(value);
   const handleMinPrice = (value) => setMinPrice(Number(value));
@@ -113,19 +114,19 @@ const Men = ({ products, addToCart }) => {
             <div className="mb-8">
               <h1 className="text-3xl font-bold mb-4">Men</h1>
               <p className="text-gray-600 mb-6">
-                Explore our premium collection of Men's fashion
+                Explore our premium collection of Men&apos;s fashion
               </p>
               <div className="flex justify-between items-center">
                 <p className="text-gray-600">
-                  Showing {filteredProducts.length} results
+                  Showing {menProducts.length} results
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-              {filteredProducts.map((product) => (
+              {menProducts.map((product) => (
                 <Card
-                  key={product.id}
+                  key={product._id}
                   className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full"
                   onClick={() => setSelectedProduct(product)}
                 >

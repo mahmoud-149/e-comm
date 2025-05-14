@@ -14,7 +14,9 @@ import ProductDetails from "./pages/ProductDetails";
 const App = () => {
   const [loggedin, setLoggedin] = useState(); //the user
   const [statslog, setStatslog] = useState(localStorage.id ? true : false);
-
+  const [menProducts, setMenProducts] = useState([]);
+  const [womenProducts, setWomenProducts] = useState([]);
+  const [productsSE, setProductsSE] = useState([]);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState([]);
 
@@ -23,7 +25,7 @@ const App = () => {
       const URL = import.meta.env.VITE_URL; // to secure the data base in real projects
       axios({
         method: "get",
-        url: `${URL}/user/${localStorage.id}`,
+        url: `${URL}/api/users${localStorage.id}`,
       })
         .then((res) => {
           setLoggedin(res.data);
@@ -48,28 +50,29 @@ const App = () => {
     try {
       const req = await axios({
         method: "get",
-        url: `${URL}/products`,
+        url: `${URL}/api/products`,
       });
-      setProducts(req.data);
+      let mainData = req?.data?.data?.data;
+      if (req.data?.status == 200) {
+        setProducts(mainData);
+        let allMenProducts = mainData.filter(
+          (product) => product.category == "men"
+        );
+        let allWomenProducts = mainData.filter(
+          (product) => product.category == "women"
+        );
+        setMenProducts(allMenProducts);
+        setWomenProducts(allWomenProducts);
+      }
     } catch (e) {
-      setProducts(e.message);
+      setProductsSE(e.message);
     }
-
-    // fetch(`${URL}/products`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setProducts(data);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching products:", error);
-    //     setLoading(false);
-    //   });
   };
 
   useEffect(() => {
     getTheProducts();
-  }, [products]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const addToCart = (product) => {
     setCartItems((prevItems) => {
@@ -138,17 +141,22 @@ const App = () => {
           <Route
             path="/*"
             element={
-              <UserViewLayout
-                products={products}
-                cartItems={cartItems}
-                addToCart={addToCart}
-                removeFromCart={removeFromCart}
-                updateCartItemQuantity={updateCartItemQuantity}
-                clearCart={clearCart}
-                deleteItem={deleteItem}
-              />
+              <>
+                <UserViewLayout
+                  products={products}
+                  cartItems={cartItems}
+                  addToCart={addToCart}
+                  removeFromCart={removeFromCart}
+                  updateCartItemQuantity={updateCartItemQuantity}
+                  clearCart={clearCart}
+                  deleteItem={deleteItem}
+                  menProducts={menProducts}
+                  womenProducts={womenProducts}
+                />
+              </>
             }
           />
+          {productsSE && productsSE}
           <Route
             path="/products/:id"
             element={
