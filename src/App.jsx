@@ -53,7 +53,7 @@ const App = () => {
     try {
       const req = await axios({
         method: "get",
-        url: `${URL}/api/products`,
+        url: `${URL}/products`,
       });
       let mainData = req?.data?.data?.data;
 
