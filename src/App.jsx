@@ -16,8 +16,11 @@ const App = () => {
   const [statslog, setStatslog] = useState(localStorage.id ? true : false);
 
   const [products, setProducts] = useState([]);
+  const [productSE, setProductSE] = useState([]);
   const [cartItems, setCartItems] = useState([]);
 
+  const [menProducts, setMenProducts] = useState([]);
+  const [womenProducts, setWomenProducts] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
   const getLogInfo = () => {
@@ -50,28 +53,27 @@ const App = () => {
     try {
       const req = await axios({
         method: "get",
-        url: `${URL}/products`,
+        url: `${URL}/api/products`,
       });
-      setProducts(req.data);
-    } catch (e) {
-      setProducts(e.message);
-    }
+      let mainData = req?.data?.data?.data;
 
-    // fetch(`${URL}/products`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setProducts(data);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching products:", error);
-    //     setLoading(false);
-    //   });
+      setProducts(mainData);
+      let allMenProduct = mainData.filter(
+        (product) => product.category == "men"
+      );
+      let allWomenProduct = mainData.filter(
+        (product) => product.category == "women"
+      );
+      setMenProducts(allMenProduct);
+      setWomenProducts(allWomenProduct);
+    } catch (e) {
+      setProductSE(e.message);
+    }
   };
 
   useEffect(() => {
     getTheProducts();
-  }, [products]);
+  }, []);
 
   const getAllUsers = async () => {
     const URL = import.meta.env.VITE_URL;
@@ -88,12 +90,12 @@ const App = () => {
       if (existingItem) {
         return prevItems.map((item) =>
           item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + product.quantity }
             : item
         );
       }
 
-      return [...prevItems, { ...product, quantity: 1 }];
+      return [...prevItems, { ...product, quantity: product.quantity }];
     });
   };
 
@@ -159,12 +161,15 @@ const App = () => {
                 updateCartItemQuantity={updateCartItemQuantity}
                 clearCart={clearCart}
                 deleteItem={deleteItem}
+                menProducts={menProducts}
+                womenProducts={womenProducts}
               />
             }
           />
 
-          <Route
+          {productSE && productSE}
 
+          <Route
             path="/products/:id"
             element={
               <ProductDetailsWrapper
@@ -174,13 +179,11 @@ const App = () => {
             }
           />
           <Route
-
             path="/admin/*"
             element={
               loggedin?.role == "admin" ? <AdminViewLayout /> : <NotFound />
             }
           />
-
         </Routes>
       </div>
     </Store.Provider>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
   Card,
@@ -9,43 +10,16 @@ import {
 import { Link } from "react-router";
 import { BiSolidLock, BiSolidOffer, BiWorld } from "react-icons/bi";
 import { GiClothesline, GiShoppingBag } from "react-icons/gi";
+import { useState } from "react";
+import ProductDetails from "./ProductDetails";
 
 const Home = ({ products, addToCart }) => {
-  const CategoryCard = ({ image, title, subtitle, to }) => (
-    <Card className="relative h-96 overflow-hidden group shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
-      <CardHeader
-        floated={false}
-        className="h-full w-full transform transition-transform duration-500 group-hover:scale-105"
-      >
-        <img src={image} alt={title} className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
-      </CardHeader>
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-      <CardBody className="absolute bottom-0 w-full text-center space-y-4">
-        <Typography variant="h3" className="text-2xl font-bold text-white">
-          {title}
-        </Typography>
-        <Typography as={"div"} className="flex flex-col gap-3">
-          <Typography className="text-gray-200 font-medium">
-            {subtitle}
-          </Typography>
-          <Link to={to}>
-            <Button
-              variant="filled"
-              color="white"
-              className="text-black rounded-full px-8 py-2 hover:bg-gray-100 transition-all duration-300 hover:scale-105 hover:shadow-lg"
-            >
-              Shop Now
-            </Button>
-          </Link>
-        </Typography>
-      </CardBody>
-    </Card>
-  );
   return (
-    <div className="flex flex-col gap-16 px-4 md:px-8 lg:px-16 py-12">
+    <div className="flex flex-col gap-16 px-4 md:px-8 lg:px-16 py-12 bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
-      <section className="relative h-[70vh] min-h-[600px] w-full overflow-hidden rounded-2xl shadow-2xl">
+      <section className="relative h-[70vh] min-h-[600px] w-full overflow-hidden rounded-3xl shadow-2xl">
         <img
           src="/Home/HomeHero.jpg"
           alt="Summer Sale Hero"
@@ -95,46 +69,104 @@ const Home = ({ products, addToCart }) => {
       </section>
 
       {/* Categories Section */}
-      <section className="container mx-auto px-4">
-        <div className="animate-fadeIn">
+      <section className="container mx-auto px-4 py-16 lg:py-24">
+        <div className="animate-fadeIn max-w-7xl mx-auto">
           <Typography
             variant="h2"
-            className="text-4xl md:text-5xl font-bold mb-12 text-center"
+            className="text-4xl md:text-5xl font-bold mb-12 text-center text-gray-900 relative pb-11"
           >
             Shop by Category
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full mt-2"></div>
           </Typography>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <CategoryCard
-              image="/Home/men.jpg"
-              title="Men's Collection"
-              subtitle="Explore Trending Styles"
-              to="/men"
-            />
-            <CategoryCard
-              image="/Home/wo.jpg"
-              title="Women's Collection"
-              subtitle="Discover New Arrivals"
-              to="/women"
-            />
-            <CategoryCard
-              image="/Home/EThing.jpg"
-              title="Everything"
-              subtitle="Everything You Need"
-              to="/everything"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {/* Category Card 1 - Women */}
+            <div className="group relative h-[400px] rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:z-10">
+              <div className="absolute inset-0 overflow-hidden">
+                <img
+                  src="/Home/wo.jpg"
+                  alt="Women's Fashion"
+                  className="w-full h-auto object-cover transition-all duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-100"></div>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-center translate-y-0 group-hover:-translate-y-4 transition-all duration-500">
+                <h1 className="text-3xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">
+                  Women
+                </h1>
+                <p className="text-gray-200 mb-6 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  Explore Trending Styles
+                </p>
+                <Link to={"/women"}>
+                  <button className="px-8 py-3 bg-white text-gray-900 rounded-full font-bold transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-gray-100 shadow-lg">
+                    Shop Now →
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Category Card 2 - Men */}
+            <div className="group relative h-[400px] rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:z-10">
+              <div className="absolute inset-0 overflow-hidden">
+                <img
+                  src="/Home/men.jpg"
+                  alt="Men's Fashion"
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-100"></div>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-center translate-y-0 group-hover:-translate-y-4 transition-all duration-500">
+                <h1 className="text-3xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">
+                  Men
+                </h1>
+                <p className="text-gray-200 mb-6 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  Discover New Arrivals
+                </p>
+                <Link to={"/men"}>
+                  <button className="px-8 py-3 bg-white text-gray-900 rounded-full font-bold transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-gray-100 shadow-lg">
+                    Shop Now →
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Category Card 3 - Everything */}
+            <div className="group relative h-[400px] rounded-2xl overflow-hidden transition-all duration-500 hover:shadow-2xl hover:z-10">
+              <div className="absolute inset-0 overflow-hidden">
+                <img
+                  src="/Home/EThing.jpg"
+                  alt="Everything Collection"
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent opacity-100"></div>
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-center translate-y-0 group-hover:-translate-y-4 transition-all duration-500">
+                <h1 className="text-3xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">
+                  Everything
+                </h1>
+                <p className="text-gray-200 mb-6 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  Curated Collections
+                </p>
+                <Link to={"/everything"}>
+                  <button className="px-8 py-3 bg-white text-gray-900 rounded-full font-bold transform translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-gray-100 shadow-lg">
+                    Shop Now →
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Featured Products Section */}
-      <section className="mx-auto px-4 py-16 bg-gradient-to-b from-gray-100 to-white rounded-2xl w-full flex flex-col gap-12 shadow-xl">
+      <section className="mx-auto px-4 py-16 bg-gradient-to-b from-gray-100 to-white rounded-3xl w-full flex flex-col gap-12 shadow-xl">
         <div className="animate-fadeIn">
           <Typography
             variant="h2"
-            className="text-3xl md:text-4xl font-bold mb-4 text-center"
+            className="text-3xl md:text-4xl font-bold mb-4 text-center text-gray-800 relative pb-9"
           >
             Featured Products
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-blue-600 rounded-full mt-2"></div>
           </Typography>
           <Typography
             variant="paragraph"
@@ -146,10 +178,10 @@ const Home = ({ products, addToCart }) => {
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
             {products.map((product) => (
-            
-             <Card
-                key={product.id}
+              <Card
+                key={product._id}
                 className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full hover:-translate-y-1"
+                onClick={() => setSelectedProduct(product)}
               >
                 <CardHeader
                   floated={false}
@@ -162,22 +194,13 @@ const Home = ({ products, addToCart }) => {
                     className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                  <div className="absolute inset-0 right-4 top-4">
-                    <Button
-                      size="sm"
-                      color="white"
-                      className="rounded-full p-2 bg-white/90 backdrop-blur-sm hover:bg-white text-black shadow-lg hover:scale-110 transition-transform"
-                      onClick={() => addToCart(product)}
-                    >
-                      <GiShoppingBag size={18} />
-                    </Button>
-                  </div>
+                  <div className="absolute inset-0 right-4 top-4"></div>
                 </CardHeader>
                 <CardBody className="pt-2 pb-4 px-4">
                   <div className="flex justify-between items-start mb-2">
                     <Typography
                       variant="h3"
-                      className="text-base font-semibold text-gray-900 group-hover:text-blue-600 transition-colors"
+                      className="text-base font-semibold text-gray-900"
                     >
                       {product.title.slice(0, 20) + "..."}
                     </Typography>
@@ -214,7 +237,7 @@ const Home = ({ products, addToCart }) => {
           </div>
         </div>
 
-        <div className="relative rounded-2xl overflow-hidden h-[400px] md:h-[500px] mt-8 md:mt-16 shadow-2xl animate-fadeIn">
+        <div className="relative rounded-3xl overflow-hidden h-[400px] md:h-[500px] mt-8 md:mt-16 shadow-2xl animate-fadeIn">
           <img
             src="/Home/Spe.E.jpg"
             alt="Special edition"
@@ -245,23 +268,31 @@ const Home = ({ products, addToCart }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 md:px-8 animate-fadeIn">
-          <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-            <GiClothesline size={60} />
+          <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+            <div className="p-4 bg-blue-50 rounded-full">
+              <GiClothesline size={60} />
+            </div>
             <h2 className="text-xl font-bold text-gray-800">Free Shipping</h2>
             <p className="text-gray-600 text-center">On all orders over $100</p>
           </div>
-          <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-            <BiSolidLock size={60} />
+          <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+            <div className="p-4 bg-blue-50 rounded-full">
+              <BiSolidLock size={60} />
+            </div>
             <h2 className="text-xl font-bold text-gray-800">Secure Payment</h2>
             <p className="text-gray-600 text-center">100% secure payment</p>
           </div>
-          <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-            <BiSolidOffer size={60} />
+          <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+            <div className="p-4 bg-blue-50 rounded-full">
+              <BiSolidOffer size={60} />
+            </div>
             <h2 className="text-xl font-bold text-gray-800">Special Offers</h2>
             <p className="text-gray-600 text-center">Great deals every day</p>
           </div>
-          <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow">
-            <BiWorld size={60} />
+          <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+            <div className="p-4 bg-blue-50 rounded-full">
+              <BiWorld size={60} />
+            </div>
             <h2 className="text-xl font-bold text-gray-800">
               Worldwide Shipping
             </h2>
@@ -269,6 +300,13 @@ const Home = ({ products, addToCart }) => {
           </div>
         </div>
       </section>
+      {selectedProduct && (
+        <ProductDetails
+          product={selectedProduct}
+          addToCart={addToCart}
+          onClose={() => setSelectedProduct(null)}
+        />
+      )}
     </div>
   );
 };

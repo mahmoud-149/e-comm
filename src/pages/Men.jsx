@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { Link } from "react-router";
 import {
   Card,
@@ -10,19 +12,19 @@ import { GiShoppingBag } from "react-icons/gi";
 import { useState } from "react";
 import ProductDetails from "./ProductDetails";
 
-const Men = ({ products, addToCart }) => {
+const Men = ({ menProducts, addToCart }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const initialMaxPrice = Math.max(...products.map((p) => p.price));
+  const initialMaxPrice = Math.max(...menProducts.map((p) => p.price));
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
 
-  const filteredProducts = products.filter(
-    (product) =>
-      product.price >= minPrice &&
-      product.price <= maxPrice &&
-      product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredProducts = products.filter(
+  //   (product) =>
+  //     product.price >= minPrice &&
+  //     product.price <= maxPrice &&
+  //     product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   const handleSearch = (value) => setSearchTerm(value);
   const handleMinPrice = (value) => setMinPrice(Number(value));
@@ -113,19 +115,19 @@ const Men = ({ products, addToCart }) => {
             <div className="mb-8">
               <h1 className="text-3xl font-bold mb-4">Men</h1>
               <p className="text-gray-600 mb-6">
-                Explore our premium collection of Men's fashion
+                Explore our premium collection of Men&aspos;s fashion
               </p>
               <div className="flex justify-between items-center">
                 <p className="text-gray-600">
-                  Showing {filteredProducts.length} results
+                  Showing {menProducts.length} results
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-              {filteredProducts.map((product) => (
+              {menProducts.map((product) => (
                 <Card
-                  key={product.id}
+                  key={product._id}
                   className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full"
                   onClick={() => setSelectedProduct(product)}
                 >
@@ -139,16 +141,7 @@ const Men = ({ products, addToCart }) => {
                       alt={product.title}
                       className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute top-4 right-4">
-                      <Button
-                        size="sm"
-                        color="white"
-                        className="rounded-full p-2 bg-white/90 backdrop-blur-sm shadow-lg hover:scale-110"
-                        onClick={() => addToCart(product)}
-                      >
-                        <GiShoppingBag size={18} />
-                      </Button>
-                    </div>
+                    <div className="absolute top-4 right-4"></div>
                   </CardHeader>
                   <CardBody className="pt-2 pb-4 px-4">
                     <div className="flex justify-between items-start mb-2">

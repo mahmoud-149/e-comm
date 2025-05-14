@@ -120,30 +120,36 @@ const AboutUs = () => {
       </div>
 
       {/* Features Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="flex flex-col items-center gap-4 p-8 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            <GiClothesline className="w-16 h-16 " />
-            <h2 className="text-xl font-bold text-gray-800">Free Shipping</h2>
-            <p className="text-gray-600 text-center">On all orders over $100</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 md:px-8 animate-fadeIn">
+        <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+          <div className="p-4 bg-blue-50 rounded-full">
+            <GiClothesline size={60} />
           </div>
-          <div className="flex flex-col items-center gap-4 p-8 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            <BiSolidLock className="w-16 h-16" />
-            <h2 className="text-xl font-bold text-gray-800">Secure Payment</h2>
-            <p className="text-gray-600 text-center">100% secure payment</p>
+          <h2 className="text-xl font-bold text-gray-800">Free Shipping</h2>
+          <p className="text-gray-600 text-center">On all orders over $100</p>
+        </div>
+        <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+          <div className="p-4 bg-blue-50 rounded-full">
+            <BiSolidLock size={60} />
           </div>
-          <div className="flex flex-col items-center gap-4 p-8 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            <BiSolidOffer className="w-16 h-16" />
-            <h2 className="text-xl font-bold text-gray-800">Special Offers</h2>
-            <p className="text-gray-600 text-center">Great deals every day</p>
+          <h2 className="text-xl font-bold text-gray-800">Secure Payment</h2>
+          <p className="text-gray-600 text-center">100% secure payment</p>
+        </div>
+        <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+          <div className="p-4 bg-blue-50 rounded-full">
+            <BiSolidOffer size={60} />
           </div>
-          <div className="flex flex-col items-center gap-4 p-8 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-            <BiWorld className="w-16 h-16" />
-            <h2 className="text-xl font-bold text-gray-800">
-              Worldwide Shipping
-            </h2>
-            <p className="text-gray-600 text-center">Fast delivery worldwide</p>
+          <h2 className="text-xl font-bold text-gray-800">Special Offers</h2>
+          <p className="text-gray-600 text-center">Great deals every day</p>
+        </div>
+        <div className="flex flex-col items-center gap-4 p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border border-gray-100">
+          <div className="p-4 bg-blue-50 rounded-full">
+            <BiWorld size={60} />
           </div>
+          <h2 className="text-xl font-bold text-gray-800">
+            Worldwide Shipping
+          </h2>
+          <p className="text-gray-600 text-center">Fast delivery worldwide</p>
         </div>
       </div>
     </div>
