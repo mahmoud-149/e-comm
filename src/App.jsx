@@ -20,7 +20,7 @@ const App = () => {
   const [cartItems, setCartItems] = useState([]);
 
   const [menProducts, setMenProducts] = useState([]);
-  const [WomenProducts, setWomenProducts] = useState([]);
+  const [womenProducts, setWomenProducts] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
   const getLogInfo = () => {
@@ -70,17 +70,6 @@ const App = () => {
     } catch (e) {
       setProductSE(e.message);
     }
-
-    // fetch(`${URL}/products`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setProducts(data);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching products:", error);
-    //     setLoading(false);
-    //   });
   };
 
   useEffect(() => {
@@ -173,6 +162,8 @@ const App = () => {
                 updateCartItemQuantity={updateCartItemQuantity}
                 clearCart={clearCart}
                 deleteItem={deleteItem}
+                menProducts={menProducts}
+                womenProducts={womenProducts}
               />
             }
           />
