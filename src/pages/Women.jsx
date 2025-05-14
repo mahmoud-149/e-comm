@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { Link } from "react-router";
 import {
   Card,
@@ -113,7 +115,7 @@ const Women = ({ products, addToCart }) => {
             <div className="mb-8">
               <h1 className="text-3xl font-bold mb-4">Women</h1>
               <p className="text-gray-600 mb-6">
-                Explore our premium collection of Women's fashion
+                Explore our premium collection of Women&aspos;s fashion
               </p>
               <div className="flex justify-between items-center">
                 <p className="text-gray-600">

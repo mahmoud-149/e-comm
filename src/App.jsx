@@ -56,7 +56,6 @@ const App = () => {
         url: `${URL}/api/products`,
       });
       let mainData = req?.data?.data?.data;
-      console.log(mainData);
 
       setProducts(mainData);
       let allMenProduct = mainData.filter(
