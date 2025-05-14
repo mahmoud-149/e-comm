@@ -16,8 +16,11 @@ const App = () => {
   const [statslog, setStatslog] = useState(localStorage.id ? true : false);
 
   const [products, setProducts] = useState([]);
+  const [productSE, setProductSE] = useState([]);
   const [cartItems, setCartItems] = useState([]);
 
+  const [menProducts, setMenProducts] = useState([]);
+  const [WomenProducts, setWomenProducts] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
   const getLogInfo = () => {
@@ -50,11 +53,22 @@ const App = () => {
     try {
       const req = await axios({
         method: "get",
-        url: `${URL}/products`,
+        url: `${URL}/api/products`,
       });
-      setProducts(req.data);
+      let mainData = req?.data?.data?.data;
+      console.log(mainData);
+
+      setProducts(mainData);
+      let allMenProduct = mainData.filter(
+        (product) => product.category == "men"
+      );
+      let allWomenProduct = mainData.filter(
+        (product) => product.category == "women"
+      );
+      setMenProducts(allMenProduct);
+      setWomenProducts(allWomenProduct);
     } catch (e) {
-      setProducts(e.message);
+      setProductSE(e.message);
     }
 
     // fetch(`${URL}/products`)
@@ -71,7 +85,7 @@ const App = () => {
 
   useEffect(() => {
     getTheProducts();
-  }, [products]);
+  }, []);
 
   const getAllUsers = async () => {
     const URL = import.meta.env.VITE_URL;
@@ -163,8 +177,9 @@ const App = () => {
             }
           />
 
-          <Route
+          {productSE && productSE}
 
+          <Route
             path="/products/:id"
             element={
               <ProductDetailsWrapper
@@ -174,13 +189,11 @@ const App = () => {
             }
           />
           <Route
-
             path="/admin/*"
             element={
               loggedin?.role == "admin" ? <AdminViewLayout /> : <NotFound />
             }
           />
-
         </Routes>
       </div>
     </Store.Provider>
