@@ -32,11 +32,7 @@ const SignUp = () => {
   const saveInput = async () => {
    const res=  axios({
       method: "post",
-
-      url: `${URL}/api/users`,
-
-      url: `${URL}/users/signup`,
-
+      url: `${URL}/api/users/signup`,
       data: user,
     })
     if(res.status===201){

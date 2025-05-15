@@ -34,9 +34,7 @@ const App = () => {
       axios({
         method: "get",
 
-        url: `${URL}/api/users/${localStorage.id}`,
-
-        url: `${URL}/user/${decode.id}`,
+        url: `${URL}/api/user/${decode.id}`,
 
       })
         .then((res) => {

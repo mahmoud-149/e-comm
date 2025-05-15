@@ -25,25 +25,7 @@ const LogIn = () => {
 
   const [userLogTry, setUserLogTry] = useState(true);
 
-
-  const getAllUsers = () => {
-    const URL = import.meta.env.VITE_URL;
-    const confg = {
-      method: "get",
-      url: `${URL}/api/users`,
-    };
-
-    axios(confg)
-      .then((res) => {
-        setDbUsers(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
   // const getAllUsers = () => {
-  //   const URL = import.meta.env.VITE_URL;
   //   const confg = {
   //     method: "get",
   //     url: `${URL}/users`,
@@ -74,19 +56,23 @@ const LogIn = () => {
     //   );
     // });
     // console.log(matchUser);
+   // console.log("hello");
     
    const res = await axios({
      method: "post",
-     url: `${URL}/users/login`,
+     url: `${URL}/api/users/login`,
      data: Tryloggeduser,
    });
     
     if (res.status===201) {
-     const token=res.data;////////////////////
+     const token=res.data.data.token;////////////////////
+     //console.log(token);
      const decode=jwtDecode(token)
      
       setLoggedin(decode);
       setStatslog(true);
+      console.log(token);
+      
       localStorage.tk = token;
       setUserLogTry(true);
       navigate("/");
