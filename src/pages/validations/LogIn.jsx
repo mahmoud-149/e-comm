@@ -25,6 +25,23 @@ const LogIn = () => {
 
   const [userLogTry, setUserLogTry] = useState(true);
 
+
+  const getAllUsers = () => {
+    const URL = import.meta.env.VITE_URL;
+    const confg = {
+      method: "get",
+      url: `${URL}/api/users`,
+    };
+
+    axios(confg)
+      .then((res) => {
+        setDbUsers(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   // const getAllUsers = () => {
   //   const URL = import.meta.env.VITE_URL;
   //   const confg = {
@@ -40,6 +57,7 @@ const LogIn = () => {
   //       console.log(e);
   //     });
   // };
+
 
 
 
