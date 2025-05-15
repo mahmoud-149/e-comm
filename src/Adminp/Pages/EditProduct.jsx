@@ -29,7 +29,7 @@ const EditProduct = () => {
     const URL = import.meta.env.VITE_URL;
     const req = await axios({
       method: "get",
-      url: `${URL}/products/${id}`,
+      url: `${URL}/api/products/${id}`,
     });
     setCurrentProduct(req.data);
     // console.log(req.data);
@@ -40,7 +40,7 @@ const EditProduct = () => {
 
       axios({
         method: "put", //there is put for change all the object and "patch " for only the key
-        url: `${URL}/products/${id}`,
+        url: `${URL}/api/products/${id}`,
         data: currentProduct,
       });
       navigate(-1);

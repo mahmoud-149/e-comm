@@ -19,7 +19,7 @@ const Men = ({ menProducts, addToCart }) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
 
-  // const filteredProducts = products.filter(
+  // const filteredProducts = menProducts.filter(
   //   (product) =>
   //     product.price >= minPrice &&
   //     product.price <= maxPrice &&

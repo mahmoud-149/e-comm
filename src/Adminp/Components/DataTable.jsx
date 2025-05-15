@@ -17,7 +17,7 @@ const deleteProduct = async (id) => {
 
     const req = await axios({
       method: "delete",
-      url: `${URL}/products/${id}`,
+      url: `${URL}/api/products/${id}`,
     });
 
     return req.status;
