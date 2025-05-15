@@ -11,6 +11,7 @@ import { Link } from "react-router";
 import { useNavigate } from "react-router";
 import Store from "../../../context/Store";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const LogIn = () => {
   const { setStatslog, setLoggedin } = useContext(Store);
@@ -20,51 +21,65 @@ const LogIn = () => {
     email: "",
     password: "",
   });
-  const [dbUsers, setDbUsers] = useState();
+  //const [dbUsers, setDbUsers] = useState();
 
   const [userLogTry, setUserLogTry] = useState(true);
 
-  const getAllUsers = () => {
-    const URL = import.meta.env.VITE_URL;
-    const confg = {
-      method: "get",
-      url: `${URL}/user`,
-    };
+  // const getAllUsers = () => {
+  //   const URL = import.meta.env.VITE_URL;
+  //   const confg = {
+  //     method: "get",
+  //     url: `${URL}/users`,
+  //   };
 
-    axios(confg)
-      .then((res) => {
-        setDbUsers(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  //   axios(confg)
+  //     .then((res) => {
+  //       setDbUsers(res.data.data.data);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
-  const CheckValid = () => {
-    const matchUser = dbUsers.find((usr) => {
-      return (
-        usr.email == Tryloggeduser.email &&
-        usr.password == Tryloggeduser.password
-      );
-    });
+
+
+  // useEffect(()=>{
+  //   console.log(dbUsers);
+    
+  // },[dbUsers])
+
+  const CheckValid = async () => {
+    // const matchUser = dbUsers.find((usr) => {
+    //   return (
+    //     usr.email == Tryloggeduser.email &&
+    //     usr.password == Tryloggeduser.password
+    //   );
+    // });
     // console.log(matchUser);
-    if (matchUser) {
-      // console.log("true");
+    
+   const res = await axios({
+     method: "post",
+     url: `${URL}/users/login`,
+     data: Tryloggeduser,
+   });
+    
+    if (res.status===201) {
+     const token=res.data;////////////////////
+     const decode=jwtDecode(token)
+     
+      setLoggedin(decode);
       setStatslog(true);
-      navigate("/");
-      setLoggedin(matchUser);
-      localStorage.id = matchUser.id;
+      localStorage.tk = token;
       setUserLogTry(true);
+      navigate("/");
     } else {
       setUserLogTry(false);
-      console.log("noo");
+      //console.log("noo");
       // console.log(userLogTry);
     }
   };
 
-  useEffect(() => {
-    getAllUsers();
-  }, []);
+  
   useEffect(() => {
     //  console.log(Tryloggeduser);
   }, [Tryloggeduser]);
