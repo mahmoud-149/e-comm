@@ -169,3 +169,5 @@ const ProductDetails = ({ product, addToCart, onClose }) => {
 };
 
 export default ProductDetails;
+
+//.....

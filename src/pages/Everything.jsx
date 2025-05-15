@@ -189,3 +189,6 @@ const Everything = ({ products, addToCart }) => {
 };
 
 export default Everything;
+ 
+
+//......
