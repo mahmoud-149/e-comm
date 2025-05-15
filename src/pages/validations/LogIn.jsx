@@ -25,7 +25,6 @@ const LogIn = () => {
 
   const [userLogTry, setUserLogTry] = useState(true);
 
-     const URL = import.meta.env.VITE_URL;
   // const getAllUsers = () => {
   //   const confg = {
   //     method: "get",
@@ -40,6 +39,7 @@ const LogIn = () => {
   //       console.log(e);
   //     });
   // };
+
 
 
 

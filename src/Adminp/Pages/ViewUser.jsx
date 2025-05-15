@@ -9,7 +9,7 @@ const ViewUser = () => {
    const URL = import.meta.env.VITE_URL;
    const req = await axios({
      method: "get",
-     url: `${URL}/user/${id}`,
+     url: `${URL}/api/users/${id}`,
    });
    setTheUser(req.data);
  };

@@ -19,16 +19,16 @@ const Men = ({ menProducts, addToCart }) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
 
-  // const filteredProducts = products.filter(
+  // const filteredProducts = menProducts.filter(
   //   (product) =>
   //     product.price >= minPrice &&
   //     product.price <= maxPrice &&
   //     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   // );
 
-  const handleSearch = (value) => setSearchTerm(value);
-  const handleMinPrice = (value) => setMinPrice(Number(value));
-  const handleMaxPrice = (value) => setMaxPrice(Number(value));
+  // const handleSearch = (value) => setSearchTerm(value);
+  // const handleMinPrice = (value) => setMinPrice(Number(value));
+  // const handleMaxPrice = (value) => setMaxPrice(Number(value));
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -191,3 +191,5 @@ const Men = ({ menProducts, addToCart }) => {
 };
 
 export default Men;
+
+//......

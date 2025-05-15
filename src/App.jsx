@@ -33,7 +33,9 @@ const App = () => {
 
       axios({
         method: "get",
+
         url: `${URL}/api/user/${decode.id}`,
+
       })
         .then((res) => {
           setLoggedin(res.data); 
@@ -84,7 +86,7 @@ const App = () => {
     const URL = import.meta.env.VITE_URL;
     const req = await axios({
       method: "get",
-      url: `${URL}/user`,
+      url: `${URL}/api/users`,
     });
     setAllUsers(req.data);
   };

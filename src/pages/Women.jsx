@@ -26,9 +26,9 @@ const Women = ({ womenProducts, addToCart }) => {
   //     product.title.toLowerCase().includes(searchTerm.toLowerCase())
   // );
 
-  const handleSearch = (value) => setSearchTerm(value);
-  const handleMinPrice = (value) => setMinPrice(Number(value));
-  const handleMaxPrice = (value) => setMaxPrice(Number(value));
+  // const handleSearch = (value) => setSearchTerm(value);
+  // const handleMinPrice = (value) => setMinPrice(Number(value));
+  // const handleMaxPrice = (value) => setMaxPrice(Number(value));
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -191,3 +191,5 @@ const Women = ({ womenProducts, addToCart }) => {
 };
 
 export default Women;
+
+//........
