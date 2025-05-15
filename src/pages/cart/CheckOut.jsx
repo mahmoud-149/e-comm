@@ -206,7 +206,7 @@ const CheckOut = ({ cartItems, clearCart }) => {
               </p>
             ) : (
               cartItems.map((item) => (
-                <div key={item.id} className="flex items-start gap-3">
+                <div key={item._id} className="flex items-start gap-3">
                   <img
                     src={item.image}
                     alt={item.title}

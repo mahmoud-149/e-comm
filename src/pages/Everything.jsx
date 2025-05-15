@@ -1,159 +1,144 @@
+/* eslint-disable react/prop-types */
 import { Link } from "react-router";
 import {
   Card,
   CardHeader,
   CardBody,
   Typography,
-  Button,
 } from "@material-tailwind/react";
-import { GiShoppingBag } from "react-icons/gi";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductDetails from "./ProductDetails";
 
 const Everything = ({ products, addToCart }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const initialMaxPrice = Math.max(...products.map((p) => p.price));
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
-
-  const filteredProducts = products.filter(
-    (product) =>
-      product.price >= minPrice &&
-      product.price <= maxPrice &&
-      product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const [maxPrice, setMaxPrice] = useState(
+    Math.max(...products.map((p) => p.price), 0)
   );
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
-  // const handleSearch = (value) => setSearchTerm(value);
-  // const handleMinPrice = (value) => setMinPrice(Number(value));
-  // const handleMaxPrice = (value) => setMaxPrice(Number(value));
+  useEffect(() => {
+    const filtered = products.filter(
+      (product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        product.price >= minPrice &&
+        product.price <= maxPrice
+    );
+    setFilteredProducts(filtered);
+  }, [searchTerm, minPrice, maxPrice, products]);
 
   return (
-    <div className="min-h-screen bg-gray-100 py-8">
+    <div className="min-h-screen bg-gray-50 py-10">
       <div className="container mx-auto px-4">
-        <nav className="text-sm text-gray-600 mb-8">
-          <Link to={"/"} className="hover:text-gray-900">
+        {/* Breadcrumb */}
+        <nav className="text-sm text-gray-600 mb-6">
+          <Link to="/" className="hover:text-black font-medium">
             Home
           </Link>{" "}
-          / <span className="text-gray-900">Everything</span>
+          / <span className="text-black font-semibold">Everything</span>
         </nav>
-      </div>
 
-      <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-8">
-          <div className="lg:w-1/4 bg-white p-6 rounded-xl shadow-lg border border-gray-100">
-            <div className="mb-8">
-              <Typography
-                variant="h5"
-                color="blue-gray"
-                className="mb-4 font-semibold"
-              >
+          <aside className="lg:w-1/4 bg-white p-6 rounded-xl shadow border">
+            <div className="mb-6">
+              <Typography variant="h5" className="font-bold mb-4">
                 Search Products
               </Typography>
-              <div className="relative flex w-full">
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  value={searchTerm}
-                  onChange={({ target }) => handleSearch(target.value)}
-                  className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search by name..."
+                className="w-full border px-4 py-2.5 rounded-md text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
             </div>
 
-            <div className="mb-8">
-              <Typography
-                variant="h5"
-                color="blue-gray"
-                className="mb-4 font-semibold"
-              >
+            <div>
+              <Typography variant="h5" className="font-bold mb-4">
                 Filter by Price
               </Typography>
-              <div className="space-y-4">
-                <div className="flex gap-3">
-                  <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-700">
-                      Min ($)
-                    </label>
-                    <input
-                      type="number"
-                      value={minPrice}
-                      onChange={({ target }) => handleMinPrice(target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <label className="text-sm font-medium text-gray-700">
-                      Max ($)
-                    </label>
-                    <input
-                      type="number"
-                      value={maxPrice}
-                      onChange={({ target }) => handleMaxPrice(target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                    />
-                  </div>
-                </div>
-                <div className="px-1">
+              <div className="flex gap-4 mb-4">
+                <div className="flex-1">
+                  <label className="block text-xs font-medium mb-1">
+                    Min ($)
+                  </label>
                   <input
-                    type="range"
-                    min="0"
-                    max={initialMaxPrice}
-                    step="10"
+                    type="number"
+                    value={minPrice}
+                    onChange={(e) =>
+                      setMinPrice(Math.max(0, Number(e.target.value)))
+                    }
+                    className="w-full border px-3 py-2 rounded-md text-sm"
+                  />
+                </div>
+                <div className="flex-1">
+                  <label className="block text-xs font-medium mb-1">
+                    Max ($)
+                  </label>
+                  <input
+                    type="number"
                     value={maxPrice}
-                    onChange={({ target }) => handleMaxPrice(target.value)}
-                    className="w-full h-1.5 bg-blue-100 rounded-lg cursor-pointer"
+                    onChange={(e) =>
+                      setMaxPrice(Math.max(0, Number(e.target.value)))
+                    }
+                    className="w-full border px-3 py-2 rounded-md text-sm"
                   />
                 </div>
               </div>
+              <input
+                type="range"
+                min="0"
+                max={Math.max(...products.map((p) => p.price))}
+                step="1"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(Number(e.target.value))}
+                className="w-full h-2 bg-blue-100 rounded-lg cursor-pointer"
+              />
             </div>
-          </div>
-
-          <div className="lg:w-3/4 bg-white p-6 rounded-3xl shadow-md">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold mb-4">Everything</h1>
-              <p className="text-gray-600 mb-6">
-                Explore our premium collection of Men's & Women's fashion
+          </aside>
+          <section className="lg:w-3/4 bg-white p-6 rounded-3xl shadow-md">
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold mb-1">Everything</h2>
+              <p className="text-gray-600">
+                Explore our premium collection of Men&apos;s & Women&apos;s
+                fashion
               </p>
-              <div className="flex justify-between items-center">
-                <p className="text-gray-600">
-                  Showing {filteredProducts.length} results
-                </p>
-              </div>
+              <p className="text-sm text-gray-500 mt-1">
+                Showing {filteredProducts.length} result
+                {filteredProducts.length !== 1 && "s"}
+              </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredProducts.map((product) => (
                 <Card
-                  key={product.id}
-                  className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full"
+                  key={product._id}
+                  className="group cursor-pointer hover:shadow-xl transition-shadow"
                   onClick={() => setSelectedProduct(product)}
                 >
                   <CardHeader
                     floated={false}
                     shadow={false}
-                    className="h-52 overflow-hidden relative"
+                    className="h-48 overflow-hidden bg-white"
                   >
                     <img
                       src={product.image}
                       alt={product.title}
-                      className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform"
                     />
-                    <div className="absolute top-4 right-4"></div>
                   </CardHeader>
-                  <CardBody className="pt-2 pb-4 px-4">
-                    <div className="flex justify-between items-start mb-2">
-                      <Typography
-                        variant="h3"
-                        className="text-base font-semibold text-gray-900"
-                      >
-                        {product.title.slice(0, 19)}
-                      </Typography>
-                      <Typography className="text-base font-bold text-blue-600">
-                        ${product.price}
-                      </Typography>
-                    </div>
-                    <div className="flex items-center gap-1">
+                  <CardBody className="px-4 pb-4 pt-2">
+                    <Typography
+                      variant="h6"
+                      className="text-sm font-semibold truncate"
+                    >
+                      {product.title}
+                    </Typography>
+                    <Typography className="text-blue-600 font-bold text-sm mb-2">
+                      ${product.price}
+                    </Typography>
+                    <div className="flex items-center">
                       {[...Array(5)].map((_, i) => (
                         <svg
                           key={i}
@@ -173,7 +158,7 @@ const Everything = ({ products, addToCart }) => {
                 </Card>
               ))}
             </div>
-          </div>
+          </section>
         </div>
       </div>
 
@@ -189,6 +174,3 @@ const Everything = ({ products, addToCart }) => {
 };
 
 export default Everything;
- 
-
-//......
