@@ -29,18 +29,38 @@ const SignUp = () => {
   const regularExperissonEmail =
     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-  const saveInput = () => {
-    axios({
+  const saveInput = async () => {
+   const res=  axios({
       method: "post",
+
       url: `${URL}/api/users`,
+
+      url: `${URL}/users/signup`,
+
       data: user,
     })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e.stats);
-      });
+    if(res.status===201){
+      console.log(good);
+      return true
+      
+    }
+    else{
+      console.log("erorr");
+        return false
+    }
+
+      // .then((res) => {
+      //   if(res.status==201)
+      //   {
+      //     console.log("goood");
+          
+      //     return true
+      //   }
+      // })
+      // .catch((e) => {
+      //   console.log("erorrrr");
+      //   return false
+      // });
   };
   const resetErrors = () => {
     console.log("back");
@@ -51,7 +71,7 @@ const SignUp = () => {
     setCatchedError({ ...catchedError, confirmPasswordError: false });
   };
 
-  const createAccount = (e) => {
+  const createAccount = async (e) => {
     // e.preventDefault()
     // console.log("hello");
     // console.log(e.target.value);
@@ -72,8 +92,16 @@ const SignUp = () => {
 
       setCatchedError({ ...catchedError, confirmPasswordError: true });
     } else {
-      saveInput();
-      navigate("/");
+     const gotCheck= await saveInput();
+     //console.log(gotCheck);
+     
+     if(gotCheck){
+       navigate("/");
+       
+      }
+      else{
+        alert("internal server error")
+      }
     }
     //u can navigate after that
   };
@@ -121,6 +149,7 @@ const SignUp = () => {
               >
                 Create Account
               </Typography>
+              
               <Typography
                 variant="paragraph"
                 color="gray"
