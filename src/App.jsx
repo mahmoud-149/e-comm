@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import ProductDetails from "./pages/ProductDetails";
 import { jwtDecode } from "jwt-decode";
 
+
 const App = () => {
   const [loggedin, setLoggedin] = useState(); //the user
   const [statslog, setStatslog] = useState(localStorage.tk ? true : false); 
@@ -23,6 +24,8 @@ const App = () => {
   const [menProducts, setMenProducts] = useState([]);
   const [womenProducts, setWomenProducts] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
+
+  const navigate = useNavigate();
 
   const getLogInfo = () => {
     if (localStorage.tk) {
@@ -51,6 +54,8 @@ const App = () => {
   const logOut = () => {
     localStorage.removeItem("id");
     setStatslog(false);
+   navigate("/");
+
   };
   useEffect(() => {
     getLogInfo();
