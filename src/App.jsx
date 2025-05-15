@@ -30,15 +30,18 @@ const App = () => {
       
       const token=localStorage.tk;////////////////////
        const decode=jwtDecode(token)
-
+     // console.log(decode.email);
+      
       axios({
         method: "get",
 
-        url: `${URL}/api/user/${decode.id}`,
+        url: `${URL}/api/users/${decode.email}`,
 
       })
         .then((res) => {
-          setLoggedin(res.data); 
+        //  console.log(res.data.data.data);
+          
+          setLoggedin(res.data.data.data); 
         })
         .catch((e) => {
           console.log(e);
@@ -145,6 +148,10 @@ const App = () => {
     setCartItems([]);
   };
 
+  // useEffect(()=>{
+  //   console.log(loggedin);
+    
+  // },[loggedin])
   return (
     <Store.Provider
       value={{
