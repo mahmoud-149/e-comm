@@ -312,3 +312,6 @@ const Home = ({ products, addToCart }) => {
 };
 
 export default Home;
+
+
+// hello
