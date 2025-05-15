@@ -18,7 +18,7 @@ const UsersTable = () => {
     // const URL = import.meta.env.VITE_URL;
     const req = await axios({
       method: "get",
-      url: `${URL}/user`,
+      url: `${URL}/api/users`,
     });
     setAllUsers(req.data);
   };
@@ -42,7 +42,7 @@ const UsersTable = () => {
         try{
            await axios({
              method: "patch", //there is put for change all the object and "patch " for only the key
-             url: `${URL}/user/${changeduserId}`,
+             url: `${URL}/api/users/${changeduserId}`,
              data: { role: "admin" },
             });
             setGotChange(!gotChange);
@@ -80,7 +80,7 @@ const UsersTable = () => {
         try{    
             axios({
                 method:"delete",
-                url:`${URL}/user/${id}`
+                url:`${URL}/api/users/${id}`
             })
 
             setGotChange(!gotChange)

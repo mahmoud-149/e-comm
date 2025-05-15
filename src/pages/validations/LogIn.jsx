@@ -28,7 +28,7 @@ const LogIn = () => {
     const URL = import.meta.env.VITE_URL;
     const confg = {
       method: "get",
-      url: `${URL}/user`,
+      url: `${URL}/api/users`,
     };
 
     axios(confg)

@@ -28,7 +28,7 @@ const App = () => {
       const URL = import.meta.env.VITE_URL; // to secure the data base in real projects
       axios({
         method: "get",
-        url: `${URL}/user/${localStorage.id}`,
+        url: `${URL}/api/users/${localStorage.id}`,
       })
         .then((res) => {
           setLoggedin(res.data);
@@ -53,7 +53,7 @@ const App = () => {
     try {
       const req = await axios({
         method: "get",
-        url: `${URL}/products`,
+        url: `${URL}/api/products`,
       });
       let mainData = req?.data?.data?.data;
 
@@ -79,7 +79,7 @@ const App = () => {
     const URL = import.meta.env.VITE_URL;
     const req = await axios({
       method: "get",
-      url: `${URL}/user`,
+      url: `${URL}/api/users`,
     });
     setAllUsers(req.data);
   };

@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router";
 import axios from "axios";
 const SignUp = () => {
   const URL = import.meta.env.VITE_URL;
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -32,7 +32,7 @@ const SignUp = () => {
   const saveInput = () => {
     axios({
       method: "post",
-      url: `${URL}/user`,
+      url: `${URL}/api/users`,
       data: user,
     })
       .then((res) => {
@@ -43,14 +43,12 @@ const SignUp = () => {
       });
   };
   const resetErrors = () => {
-console.log("back");
+    console.log("back");
 
     setCatchedError({ ...catchedError, nameError: false });
-       setCatchedError({ ...catchedError, emailError: false });
-      setCatchedError({ ...catchedError, passwordError: false });
-      setCatchedError({ ...catchedError, confirmPasswordError: false });
-
-
+    setCatchedError({ ...catchedError, emailError: false });
+    setCatchedError({ ...catchedError, passwordError: false });
+    setCatchedError({ ...catchedError, confirmPasswordError: false });
   };
 
   const createAccount = (e) => {
@@ -60,7 +58,6 @@ console.log("back");
     e.preventDefault();
     resetErrors();
     if (user.name.length < 2) {
-
       setCatchedError({ ...catchedError, nameError: true });
     } else if (!regularExperissonEmail.test(user.email)) {
       // resetErrors();
@@ -81,11 +78,9 @@ console.log("back");
     //u can navigate after that
   };
 
-
-
-   useEffect(() => {
-      console.log(catchedError);
-   }, [catchedError]);
+  useEffect(() => {
+    console.log(catchedError);
+  }, [catchedError]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
@@ -134,7 +129,6 @@ console.log("back");
                 Please fill in your details to create your account
               </Typography>
 
-
               <div className="w-full space-y-4 md:space-y-6">
                 <div className="group">
                   <Input
@@ -166,7 +160,6 @@ console.log("back");
                   />
                 </div>
 
-
                 {/* <div className="group">
                 <Input
 
@@ -177,7 +170,6 @@ console.log("back");
 
                 />
                 </div> */}
-
 
                 <div className="group">
                   <Input
@@ -198,7 +190,6 @@ console.log("back");
                     variant="small"
                     color="gray"
                     className="mt-2 text-xs md:text-sm flex items-center gap-1 font-normal"
-
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +206,6 @@ console.log("back");
                     Use at least 8 characters
                   </Typography>
                 </div>
-
 
                 <div className="group">
                   <Input
@@ -244,7 +234,6 @@ console.log("back");
                     Already have an account?
                   </Typography>
                 </div>
-
 
                 <Button
                   type="submit"

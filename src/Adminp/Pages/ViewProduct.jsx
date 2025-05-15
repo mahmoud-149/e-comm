@@ -22,7 +22,7 @@ const ViewProduct = () => {
       const URL=import.meta.env.VITE_URL;
       const req = await axios({
         method: "get",
-        url: `${URL}/products/${id}`,
+        url: `${URL}/api/products/${id}`,
       });
       setProduct(req.data);
     }
