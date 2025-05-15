@@ -16,8 +16,11 @@ const App = () => {
   const [statslog, setStatslog] = useState(localStorage.id ? true : false);
 
   const [products, setProducts] = useState([]);
+  const [productSE, setProductSE] = useState([]);
   const [cartItems, setCartItems] = useState([]);
 
+  const [menProducts, setMenProducts] = useState([]);
+  const [womenProducts, setWomenProducts] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
   const getLogInfo = () => {
@@ -52,26 +55,25 @@ const App = () => {
         method: "get",
         url: `${URL}/products`,
       });
-      setProducts(req.data);
-    } catch (e) {
-      setProducts(e.message);
-    }
+      let mainData = req?.data?.data?.data;
 
-    // fetch(`${URL}/products`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setProducts(data);
-    //     setLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error fetching products:", error);
-    //     setLoading(false);
-    //   });
+      setProducts(mainData);
+      let allMenProduct = mainData.filter(
+        (product) => product.category == "men"
+      );
+      let allWomenProduct = mainData.filter(
+        (product) => product.category == "women"
+      );
+      setMenProducts(allMenProduct);
+      setWomenProducts(allWomenProduct);
+    } catch (e) {
+      setProductSE(e.message);
+    }
   };
 
   useEffect(() => {
     getTheProducts();
-  }, [products]);
+  }, []);
 
   const getAllUsers = async () => {
     const URL = import.meta.env.VITE_URL;
@@ -159,12 +161,15 @@ const App = () => {
                 updateCartItemQuantity={updateCartItemQuantity}
                 clearCart={clearCart}
                 deleteItem={deleteItem}
+                menProducts={menProducts}
+                womenProducts={womenProducts}
               />
             }
           />
 
-          <Route
+          {productSE && productSE}
 
+          <Route
             path="/products/:id"
             element={
               <ProductDetailsWrapper
@@ -174,13 +179,11 @@ const App = () => {
             }
           />
           <Route
-
             path="/admin/*"
             element={
               loggedin?.role == "admin" ? <AdminViewLayout /> : <NotFound />
             }
           />
-
         </Routes>
       </div>
     </Store.Provider>
