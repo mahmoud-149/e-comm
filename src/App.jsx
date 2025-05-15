@@ -10,10 +10,11 @@ import Store from "./../context/Store";
 import axios from "axios";
 import NotFound from "./pages/NotFound";
 import ProductDetails from "./pages/ProductDetails";
+import { jwtDecode } from "jwt-decode";
 
 const App = () => {
   const [loggedin, setLoggedin] = useState(); //the user
-  const [statslog, setStatslog] = useState(localStorage.id ? true : false);
+  const [statslog, setStatslog] = useState(localStorage.tk ? true : false); 
 
   const [products, setProducts] = useState([]);
   const [productSE, setProductSE] = useState([]);
@@ -24,14 +25,20 @@ const App = () => {
   const [allUsers, setAllUsers] = useState([]);
 
   const getLogInfo = () => {
-    if (localStorage.id) {
+    if (localStorage.tk) {
       const URL = import.meta.env.VITE_URL; // to secure the data base in real projects
+      
+      const token=localStorage.tk;////////////////////
+       const decode=jwtDecode(token)
+
       axios({
         method: "get",
-        url: `${URL}/user/${localStorage.id}`,
+
+        url: `${URL}/api/user/${decode.id}`,
+
       })
         .then((res) => {
-          setLoggedin(res.data);
+          setLoggedin(res.data); 
         })
         .catch((e) => {
           console.log(e);
@@ -84,7 +91,7 @@ const App = () => {
     const URL = import.meta.env.VITE_URL;
     const req = await axios({
       method: "get",
-      url: `${URL}/user`,
+      url: `${URL}/api/users`,
     });
     setAllUsers(req.data);
   };

@@ -40,7 +40,7 @@ const AddProduct = () => {
 
        axios({
          method: "post",
-         url: `${URL}/products/`,
+         url: `${URL}/api/products/`,
          data: newProduct,
        })
          .then((res) => {

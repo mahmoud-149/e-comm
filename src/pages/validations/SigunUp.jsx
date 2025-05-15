@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router";
 import axios from "axios";
 const SignUp = () => {
   const URL = import.meta.env.VITE_URL;
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -29,38 +29,51 @@ const SignUp = () => {
   const regularExperissonEmail =
     /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-  const saveInput = () => {
-    axios({
+  const saveInput = async () => {
+   const res=  axios({
       method: "post",
-      url: `${URL}/user`,
+      url: `${URL}/api/users/signup`,
       data: user,
     })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((e) => {
-        console.log(e.stats);
-      });
+    if(res.status===201){
+      console.log(good);
+      return true
+      
+    }
+    else{
+      console.log("erorr");
+        return false
+    }
+
+      // .then((res) => {
+      //   if(res.status==201)
+      //   {
+      //     console.log("goood");
+          
+      //     return true
+      //   }
+      // })
+      // .catch((e) => {
+      //   console.log("erorrrr");
+      //   return false
+      // });
   };
   const resetErrors = () => {
-console.log("back");
+    console.log("back");
 
     setCatchedError({ ...catchedError, nameError: false });
-       setCatchedError({ ...catchedError, emailError: false });
-      setCatchedError({ ...catchedError, passwordError: false });
-      setCatchedError({ ...catchedError, confirmPasswordError: false });
-
-
+    setCatchedError({ ...catchedError, emailError: false });
+    setCatchedError({ ...catchedError, passwordError: false });
+    setCatchedError({ ...catchedError, confirmPasswordError: false });
   };
 
-  const createAccount = (e) => {
+  const createAccount = async (e) => {
     // e.preventDefault()
     // console.log("hello");
     // console.log(e.target.value);
     e.preventDefault();
     resetErrors();
     if (user.name.length < 2) {
-
       setCatchedError({ ...catchedError, nameError: true });
     } else if (!regularExperissonEmail.test(user.email)) {
       // resetErrors();
@@ -75,17 +88,23 @@ console.log("back");
 
       setCatchedError({ ...catchedError, confirmPasswordError: true });
     } else {
-      saveInput();
-      navigate("/");
+     const gotCheck= await saveInput();
+     //console.log(gotCheck);
+     
+     if(gotCheck){
+       navigate("/");
+       
+      }
+      else{
+        alert("internal server error")
+      }
     }
     //u can navigate after that
   };
 
-
-
-   useEffect(() => {
-      console.log(catchedError);
-   }, [catchedError]);
+  useEffect(() => {
+    console.log(catchedError);
+  }, [catchedError]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
@@ -126,6 +145,7 @@ console.log("back");
               >
                 Create Account
               </Typography>
+              
               <Typography
                 variant="paragraph"
                 color="gray"
@@ -133,7 +153,6 @@ console.log("back");
               >
                 Please fill in your details to create your account
               </Typography>
-
 
               <div className="w-full space-y-4 md:space-y-6">
                 <div className="group">
@@ -166,7 +185,6 @@ console.log("back");
                   />
                 </div>
 
-
                 {/* <div className="group">
                 <Input
 
@@ -177,7 +195,6 @@ console.log("back");
 
                 />
                 </div> */}
-
 
                 <div className="group">
                   <Input
@@ -198,7 +215,6 @@ console.log("back");
                     variant="small"
                     color="gray"
                     className="mt-2 text-xs md:text-sm flex items-center gap-1 font-normal"
-
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -215,7 +231,6 @@ console.log("back");
                     Use at least 8 characters
                   </Typography>
                 </div>
-
 
                 <div className="group">
                   <Input
@@ -244,7 +259,6 @@ console.log("back");
                     Already have an account?
                   </Typography>
                 </div>
-
 
                 <Button
                   type="submit"
