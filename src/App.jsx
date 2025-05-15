@@ -62,17 +62,22 @@ const App = () => {
         method: "get",
         url: `${URL}/api/products`,
       });
-      let mainData = req?.data?.data?.data;
 
-      setProducts(mainData);
-      let allMenProduct = mainData.filter(
-        (product) => product.category == "men"
-      );
-      let allWomenProduct = mainData.filter(
-        (product) => product.category == "women"
-      );
-      setMenProducts(allMenProduct);
-      setWomenProducts(allWomenProduct);
+      if (req.data.status === 200) {
+        let mainData = req?.data?.data?.data;
+
+        setProducts(mainData);
+        let allMenProduct = mainData.filter(
+          (product) => product.category == "men"
+        );
+        let allWomenProduct = mainData.filter(
+          (product) => product.category == "women"
+        );
+        setMenProducts(allMenProduct);
+        setWomenProducts(allWomenProduct);
+      } else {
+        throw Error("Server Error !! please try again later");
+      }
     } catch (e) {
       setProductSE(e.message);
     }
@@ -153,6 +158,7 @@ const App = () => {
         allUsers,
         setAllUsers,
         getAllUsers,
+        productSE,
       }}
     >
       <div>
@@ -170,6 +176,8 @@ const App = () => {
                 deleteItem={deleteItem}
                 menProducts={menProducts}
                 womenProducts={womenProducts}
+                setMenProducts={setMenProducts}
+                setWomenProducts={setWomenProducts}
               />
             }
           />

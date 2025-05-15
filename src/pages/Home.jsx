@@ -12,9 +12,12 @@ import { BiSolidLock, BiSolidOffer, BiWorld } from "react-icons/bi";
 import { GiClothesline, GiShoppingBag } from "react-icons/gi";
 import { useState } from "react";
 import ProductDetails from "./ProductDetails";
+import { useContext } from "react";
+import Store from "../../context/Store";
 
 const Home = ({ products, addToCart }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const { productSE } = useContext(Store);
 
   return (
     <div className="flex flex-col gap-16 px-4 md:px-8 lg:px-16 py-12 bg-gradient-to-b from-gray-50 to-white">
@@ -176,6 +179,12 @@ const Home = ({ products, addToCart }) => {
             curated to bring you the best in quality and style.
           </Typography>
 
+          {productSE && (
+            <div className="w-full flex rounded-xl p-3 justify-center items-center font-bold text-red-400 bg-gray-200">
+              {productSE}
+            </div>
+          )}
+
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
             {products.map((product) => (
               <Card
@@ -312,6 +321,5 @@ const Home = ({ products, addToCart }) => {
 };
 
 export default Home;
-
 
 // hello
