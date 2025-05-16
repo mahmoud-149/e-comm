@@ -9,8 +9,6 @@ const TABLE_HEAD = ["Title", "Price", "Image", "Action"];
 const token = localStorage.getItem("token");
 
 const deleteProduct = async (_id) => {
-  //waiting for realbackend to delete
-
   try {
     const URL = import.meta.env.VITE_URL;
 
@@ -25,9 +23,9 @@ const deleteProduct = async (_id) => {
     return req.status;
   } catch (e) {
     console.log(e);
-    
   }
 };
+
 const handleDelete = (_id) => {
   Swal.fire({
     title: "Are you sure?",
@@ -52,26 +50,24 @@ const handleDelete = (_id) => {
 
 const DataTable = () => {
   const { products, getTheProducts } = useContext(Store);
-  // const { setProducts } = useContext(Store);
-   useEffect(() => {
+
+  useEffect(() => {
     getTheProducts();
-    
-   }, [products]);
+  }, [products]);
 
   return (
-    <Card className="h-full w-full overflow-auto ">
-      <table className="w-full min-w-max table-auto text-center">
+    <Card className="h-full w-full overflow-auto bg-HeroText shadow-xl rounded-xl animate-fadeIn">
+      <table className="w-full min-w-max table-auto text-center font-MainFont">
         <thead>
           <tr>
             {TABLE_HEAD.map((head) => (
               <th
                 key={head}
-                className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
+                className="border-b border-MainButton bg-MainButton/10 p-4"
               >
                 <Typography
                   variant="small"
-                  color="blue-gray"
-                  className="font-normal leading-none opacity-70"
+                  className="font-bold text-MainText opacity-80 tracking-wide animate-slideIn"
                 >
                   {head}
                 </Typography>
@@ -82,15 +78,19 @@ const DataTable = () => {
         <tbody>
           {products.map(({ _id, title, price, image }, index) => {
             const isLast = index === products.length - 1;
-            const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
+            const classes = isLast
+              ? "p-4"
+              : "p-4 border-b border-MainButton/20";
 
             return (
-              <tr key={title}>
+              <tr
+                key={title}
+                className="hover:bg-MainButton/5 transition-colors"
+              >
                 <td className={classes}>
                   <Typography
                     variant="small"
-                    color="blue"
-                    className="font-normal"
+                    className="font-normal text-MainText animate-slideIn"
                   >
                     {title}
                   </Typography>
@@ -98,29 +98,32 @@ const DataTable = () => {
                 <td className={classes}>
                   <Typography
                     variant="small"
-                    color="red"
-                    className="font-normal"
+                    className="font-normal text-MainText animate-slideIn"
                   >
                     {price}
                   </Typography>
                 </td>
                 <td className={classes}>
-                  <Avatar src={image} />
+                  <Avatar src={image} className="mx-auto animate-slideIn" />
                 </td>
                 <td className={classes}>
-                  <div className=" flex gap-2  justify-center">
+                  <div className="flex gap-2 justify-center">
                     <Link to={`view/${_id}`}>
-                      <Button color="blue">View</Button>
+                      <Button className="bg-MainButton text-HeroText hover:bg-HoverHeroButton hover:text-HeroText rounded-lg font-MainFont text-sm tracking-wide transition-all duration-300 shadow-md animate-slideIn">
+                        View
+                      </Button>
                     </Link>
                     <Link to={`edit/${_id}`}>
-                      <Button>Edit</Button>
+                      <Button className="bg-MainButton text-HeroText hover:bg-HoverHeroButton hover:text-HeroText rounded-lg font-MainFont text-sm tracking-wide transition-all duration-300 shadow-md animate-slideIn">
+                        Edit
+                      </Button>
                     </Link>
                     <Link>
                       <Button
                         onClick={() => {
                           handleDelete(_id);
                         }}
-                        color="red"
+                        className="bg-red-600 text-HeroText hover:bg-red-800 hover:text-HeroText rounded-lg font-MainFont text-sm tracking-wide transition-all duration-300 shadow-md animate-slideIn"
                       >
                         Delete
                       </Button>

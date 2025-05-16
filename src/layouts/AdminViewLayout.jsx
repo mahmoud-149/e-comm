@@ -25,7 +25,7 @@ const AdminViewLayout = () => {
         <Route path="productcontrol/view/:_id" element={<ViewProduct />} />
         <Route path="productcontrol/edit/:_id" element={<EditProduct />} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
