@@ -25,6 +25,8 @@ const UserViewLayout = ({
   deleteItem,
   menProducts,
   womenProducts,
+  setWomenProducts,
+  setMenProducts,
 }) => {
   return (
     <div className="flex flex-col min-h-screen">
@@ -52,6 +54,7 @@ const UserViewLayout = ({
                 products={products}
                 addToCart={addToCart}
                 womenProducts={womenProducts}
+                setWomenProducts={setWomenProducts}
               />
             }
           />
@@ -62,6 +65,7 @@ const UserViewLayout = ({
                 products={products}
                 addToCart={addToCart}
                 menProducts={menProducts}
+                setMenProducts={setMenProducts}
               />
             }
           />

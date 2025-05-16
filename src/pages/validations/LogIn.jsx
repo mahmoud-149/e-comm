@@ -14,6 +14,7 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
 const LogIn = () => {
+  
   const { setStatslog, setLoggedin } = useContext(Store);
   const navigate = useNavigate();
 
@@ -21,72 +22,29 @@ const LogIn = () => {
     email: "",
     password: "",
   });
-  //const [dbUsers, setDbUsers] = useState();
 
   const [userLogTry, setUserLogTry] = useState(true);
-
-
-  const getAllUsers = () => {
-    const URL = import.meta.env.VITE_URL;
-    const confg = {
-      method: "get",
-      url: `${URL}/api/users`,
-    };
-
-    axios(confg)
-      .then((res) => {
-        setDbUsers(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  // const getAllUsers = () => {
-  //   const URL = import.meta.env.VITE_URL;
-  //   const confg = {
-  //     method: "get",
-  //     url: `${URL}/users`,
-  //   };
-
-  //   axios(confg)
-  //     .then((res) => {
-  //       setDbUsers(res.data.data.data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
-
-
-
-
-  // useEffect(()=>{
-  //   console.log(dbUsers);
-    
-  // },[dbUsers])
+  const URL = import.meta.env.VITE_URL;
 
   const CheckValid = async () => {
-    // const matchUser = dbUsers.find((usr) => {
-    //   return (
-    //     usr.email == Tryloggeduser.email &&
-    //     usr.password == Tryloggeduser.password
-    //   );
-    // });
-    // console.log(matchUser);
+    
     
    const res = await axios({
      method: "post",
-     url: `${URL}/users/login`,
+     url: `${URL}/api/users/login`,
      data: Tryloggeduser,
    });
     
     if (res.status===201) {
-     const token=res.data;////////////////////
+     const token=res.data.data.token;////////////////////
+     //console.log(token);
      const decode=jwtDecode(token)
-     
+      //console.log(decode);
+      
       setLoggedin(decode);
       setStatslog(true);
+      //console.log(token);
+      
       localStorage.tk = token;
       setUserLogTry(true);
       navigate("/");

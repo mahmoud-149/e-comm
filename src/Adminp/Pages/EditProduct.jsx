@@ -11,7 +11,7 @@ import {
   Alert,
 } from "@material-tailwind/react";
 const EditProduct = () => {
-  const { id } = useParams();
+  const { _id } = useParams();
   const [currentProduct, setCurrentProduct] = useState({
     title: "",
     price: "",
@@ -23,15 +23,19 @@ const EditProduct = () => {
       count: "",
     },
   });
+  const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
   const getTheEdit = async () => {
     const URL = import.meta.env.VITE_URL;
     const req = await axios({
       method: "get",
-      url: `${URL}/api/products/${id}`,
+      url: `${URL}/api/products/${_id}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     });
-    setCurrentProduct(req.data);
+    setCurrentProduct(req.data.data.data);
     // console.log(req.data);
   };
   const postTheEdit = () => {
@@ -40,8 +44,11 @@ const EditProduct = () => {
 
       axios({
         method: "put", //there is put for change all the object and "patch " for only the key
-        url: `${URL}/api/products/${id}`,
+        url: `${URL}/api/products/${_id}`,
         data: currentProduct,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       });
       navigate(-1);
       // console.log("done");

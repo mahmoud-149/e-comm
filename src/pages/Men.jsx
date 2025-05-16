@@ -1,34 +1,35 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 import { Link } from "react-router";
 import {
   Card,
   CardHeader,
   CardBody,
   Typography,
-  Button,
 } from "@material-tailwind/react";
-import { GiShoppingBag } from "react-icons/gi";
-import { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import ProductDetails from "./ProductDetails";
+import Store from "../../context/Store";
 
 const Men = ({ menProducts, addToCart }) => {
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const initialMaxPrice = Math.max(...menProducts.map((p) => p.price));
   const [searchTerm, setSearchTerm] = useState("");
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
+  const [maxPrice, setMaxPrice] = useState(
+    Math.max(...menProducts.map((p) => p.price), 0)
+  );
+  const [filteredProducts, setFilteredProducts] = useState(menProducts);
 
-  // const filteredProducts = menProducts.filter(
-  //   (product) =>
-  //     product.price >= minPrice &&
-  //     product.price <= maxPrice &&
-  //     product.title.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
+  const { productSE } = useContext(Store);
 
-  // const handleSearch = (value) => setSearchTerm(value);
-  // const handleMinPrice = (value) => setMinPrice(Number(value));
-  // const handleMaxPrice = (value) => setMaxPrice(Number(value));
+  useEffect(() => {
+    const filtered = menProducts.filter(
+      (product) =>
+        product.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        product.price >= minPrice &&
+        product.price <= maxPrice
+    );
+    setFilteredProducts(filtered);
+  }, [searchTerm, minPrice, maxPrice, menProducts]);
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -39,36 +40,24 @@ const Men = ({ menProducts, addToCart }) => {
           </Link>{" "}
           / <span className="text-gray-900">Men</span>
         </nav>
-      </div>
 
-      <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-8">
           <div className="lg:w-1/4 bg-white p-6 rounded-xl shadow-lg border border-gray-100">
             <div className="mb-8">
-              <Typography
-                variant="h5"
-                color="blue-gray"
-                className="mb-4 font-semibold"
-              >
+              <Typography variant="h5" className="mb-4 font-semibold">
                 Search Products
               </Typography>
-              <div className="relative flex w-full">
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  value={searchTerm}
-                  onChange={({ target }) => handleSearch(target.value)}
-                  className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
+              <input
+                type="text"
+                placeholder="Search products..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
             </div>
 
             <div className="mb-8">
-              <Typography
-                variant="h5"
-                color="blue-gray"
-                className="mb-4 font-semibold"
-              >
+              <Typography variant="h5" className="mb-4 font-semibold">
                 Filter by Price
               </Typography>
               <div className="space-y-4">
@@ -80,7 +69,9 @@ const Men = ({ menProducts, addToCart }) => {
                     <input
                       type="number"
                       value={minPrice}
-                      onChange={({ target }) => handleMinPrice(target.value)}
+                      onChange={(e) =>
+                        setMinPrice(Math.max(0, Number(e.target.value)))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md"
                     />
                   </div>
@@ -91,41 +82,43 @@ const Men = ({ menProducts, addToCart }) => {
                     <input
                       type="number"
                       value={maxPrice}
-                      onChange={({ target }) => handleMaxPrice(target.value)}
+                      onChange={(e) =>
+                        setMaxPrice(Math.max(0, Number(e.target.value)))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-md"
                     />
                   </div>
                 </div>
-                <div className="px-1">
-                  <input
-                    type="range"
-                    min="0"
-                    max={initialMaxPrice}
-                    step="10"
-                    value={maxPrice}
-                    onChange={({ target }) => handleMaxPrice(target.value)}
-                    className="w-full h-1.5 bg-blue-100 rounded-lg cursor-pointer"
-                  />
-                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max={Math.max(...menProducts.map((p) => p.price))}
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(Number(e.target.value))}
+                  className="w-full h-1.5 bg-blue-100 rounded-lg cursor-pointer"
+                />
               </div>
             </div>
           </div>
-
           <div className="lg:w-3/4 bg-white p-6 rounded-3xl shadow-md">
             <div className="mb-8">
               <h1 className="text-3xl font-bold mb-4">Men</h1>
               <p className="text-gray-600 mb-6">
                 Explore our premium collection of Men&aspos;s fashion
               </p>
-              <div className="flex justify-between items-center">
-                <p className="text-gray-600">
-                  Showing {menProducts.length} results
-                </p>
-              </div>
+              <p className="text-gray-600">
+                Showing {filteredProducts.length} results
+              </p>
             </div>
 
+            {productSE && (
+              <div className="w-full flex rounded-xl p-3 justify-center items-center font-bold text-red-400 bg-gray-200">
+                {productSE}
+              </div>
+            )}
+
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-              {menProducts.map((product) => (
+              {filteredProducts.map((product) => (
                 <Card
                   key={product._id}
                   className="group shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer h-full"
@@ -133,7 +126,6 @@ const Men = ({ menProducts, addToCart }) => {
                 >
                   <CardHeader
                     floated={false}
-                    shadow={false}
                     className="h-52 overflow-hidden relative"
                   >
                     <img
@@ -141,14 +133,10 @@ const Men = ({ menProducts, addToCart }) => {
                       alt={product.title}
                       className="w-full h-full object-contain p-4 group-hover:scale-110 transition-transform duration-500"
                     />
-                    <div className="absolute top-4 right-4"></div>
                   </CardHeader>
                   <CardBody className="pt-2 pb-4 px-4">
                     <div className="flex justify-between items-start mb-2">
-                      <Typography
-                        variant="h3"
-                        className="text-base font-semibold text-gray-900"
-                      >
+                      <Typography className="text-base font-semibold text-gray-900">
                         {product.title.slice(0, 19)}
                       </Typography>
                       <Typography className="text-base font-bold text-blue-600">
@@ -192,4 +180,6 @@ const Men = ({ menProducts, addToCart }) => {
 
 export default Men;
 
+
 //............
+

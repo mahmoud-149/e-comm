@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import ProductDetails from "./pages/ProductDetails";
 import { jwtDecode } from "jwt-decode";
 
+
 const App = () => {
   const [loggedin, setLoggedin] = useState(); //the user
   const [statslog, setStatslog] = useState(localStorage.tk ? true : false); 
@@ -24,23 +25,26 @@ const App = () => {
   const [womenProducts, setWomenProducts] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
+  const navigate = useNavigate();
+
   const getLogInfo = () => {
     if (localStorage.tk) {
       const URL = import.meta.env.VITE_URL; // to secure the data base in real projects
       
       const token=localStorage.tk;////////////////////
        const decode=jwtDecode(token)
-
+     // console.log(decode.email);
+      
       axios({
         method: "get",
 
-        url: `${URL}/api/users/${localStorage.id}`,
-
-        url: `${URL}/user/${decode.id}`,
+        url: `${URL}/api/users/${decode._id}`,
 
       })
         .then((res) => {
-          setLoggedin(res.data); 
+        //  console.log(res.data.data.data);
+          
+          setLoggedin(res.data.data.data); 
         })
         .catch((e) => {
           console.log(e);
@@ -50,6 +54,8 @@ const App = () => {
   const logOut = () => {
     localStorage.removeItem("id");
     setStatslog(false);
+   navigate("/");
+
   };
   useEffect(() => {
     getLogInfo();
@@ -64,17 +70,22 @@ const App = () => {
         method: "get",
         url: `${URL}/api/products`,
       });
-      let mainData = req?.data?.data?.data;
 
-      setProducts(mainData);
-      let allMenProduct = mainData.filter(
-        (product) => product.category == "men"
-      );
-      let allWomenProduct = mainData.filter(
-        (product) => product.category == "women"
-      );
-      setMenProducts(allMenProduct);
-      setWomenProducts(allWomenProduct);
+      if (req.data.status === 200) {
+        let mainData = req?.data?.data?.data;
+
+        setProducts(mainData);
+        let allMenProduct = mainData.filter(
+          (product) => product.category == "men"
+        );
+        let allWomenProduct = mainData.filter(
+          (product) => product.category == "women"
+        );
+        setMenProducts(allMenProduct);
+        setWomenProducts(allWomenProduct);
+      } else {
+        throw Error("Server Error !! please try again later");
+      }
     } catch (e) {
       setProductSE(e.message);
     }
@@ -85,12 +96,17 @@ const App = () => {
   }, []);
 
   const getAllUsers = async () => {
+    const token = localStorage.getItem("token");
     const URL = import.meta.env.VITE_URL;
     const req = await axios({
       method: "get",
       url: `${URL}/api/users`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     });
-    setAllUsers(req.data);
+
+    setAllUsers(req.data.data.data);
   };
   const addToCart = (product) => {
     setCartItems((prevItems) => {
@@ -142,6 +158,10 @@ const App = () => {
     setCartItems([]);
   };
 
+  // useEffect(()=>{
+  //   console.log(loggedin);
+    
+  // },[loggedin])
   return (
     <Store.Provider
       value={{
@@ -155,6 +175,8 @@ const App = () => {
         allUsers,
         setAllUsers,
         getAllUsers,
+        productSE,
+        getTheProducts,
       }}
     >
       <div>
@@ -172,6 +194,8 @@ const App = () => {
                 deleteItem={deleteItem}
                 menProducts={menProducts}
                 womenProducts={womenProducts}
+                setMenProducts={setMenProducts}
+                setWomenProducts={setWomenProducts}
               />
             }
           />

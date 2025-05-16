@@ -6,26 +6,29 @@ import axios from "axios";
 import Store from "../../../context/Store";
 
 const TABLE_HEAD = ["Title", "Price", "Image", "Action"];
+const token = localStorage.getItem("token");
 
-const deleteProduct = async (id) => {
+const deleteProduct = async (_id) => {
   //waiting for realbackend to delete
-
-  // console.log(`${id} deleted`);
 
   try {
     const URL = import.meta.env.VITE_URL;
 
     const req = await axios({
       method: "delete",
-      url: `${URL}/api/products/${id}`,
+      url: `${URL}/api/products/${_id}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     });
 
     return req.status;
   } catch (e) {
-    return e.status;
+    console.log(e);
+    
   }
 };
-const handleDelete = (id) => {
+const handleDelete = (_id) => {
   Swal.fire({
     title: "Are you sure?",
     text: "You won't be able to revert this!",
@@ -42,15 +45,18 @@ const handleDelete = (id) => {
         icon: "success",
       });
 
-      deleteProduct(id);
+      deleteProduct(_id);
     }
   });
 };
 
 const DataTable = () => {
-  const { products } = useContext(Store);
+  const { products, getTheProducts } = useContext(Store);
   // const { setProducts } = useContext(Store);
-  // useEffect(() => {}, [products]);
+   useEffect(() => {
+    getTheProducts();
+    
+   }, [products]);
 
   return (
     <Card className="h-full w-full overflow-auto ">
@@ -74,7 +80,7 @@ const DataTable = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map(({ id, title, price, image }, index) => {
+          {products.map(({ _id, title, price, image }, index) => {
             const isLast = index === products.length - 1;
             const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
 
@@ -103,16 +109,16 @@ const DataTable = () => {
                 </td>
                 <td className={classes}>
                   <div className=" flex gap-2  justify-center">
-                    <Link to={`view/${id}`}>
+                    <Link to={`view/${_id}`}>
                       <Button color="blue">View</Button>
                     </Link>
-                    <Link to={`edit/${id}`}>
+                    <Link to={`edit/${_id}`}>
                       <Button>Edit</Button>
                     </Link>
                     <Link>
                       <Button
                         onClick={() => {
-                          handleDelete(id);
+                          handleDelete(_id);
                         }}
                         color="red"
                       >

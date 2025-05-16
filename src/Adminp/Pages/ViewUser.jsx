@@ -1,27 +1,31 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 
 const ViewUser = () => {
-      const { id } = useParams();
-      const [theUser,setTheUser]=useState();
- const getTheView = async () => {
-   const URL = import.meta.env.VITE_URL;
-   const req = await axios({
-     method: "get",
-     url: `${URL}/api/users/${id}`,
-   });
-   setTheUser(req.data);
- };
+  const token = localStorage.getItem("token");
+  const { _id } = useParams();
+  const [theUser, setTheUser] = useState();
 
- useEffect(()=>{
-         getTheView()
-         console.log(theUser);
-         
-     },[])
-  return (
-    <div>View {theUser?.name}</div>
-  )
-}
+  const getTheView = async () => {
+    const URL = import.meta.env.VITE_URL;
+    const req = await axios({
+      method: "get",
+      url: `${URL}/api/users/${_id}`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    // console.log(req.data.data.data);
 
-export default ViewUser
+    setTheUser(req.data.data.data);
+  };
+
+  useEffect(() => {
+    getTheView();
+   // console.log(theUser);
+  }, []);
+  return <div>View {theUser?.name}</div>;
+};
+
+export default ViewUser;
