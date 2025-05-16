@@ -27,31 +27,28 @@ const LogIn = () => {
   const URL = import.meta.env.VITE_URL;
 
   const CheckValid = async () => {
-    
-    
-   const res = await axios({
-     method: "post",
-     url: `${URL}/api/users/login`,
-     data: Tryloggeduser,
-   });
-    
-    if (res.status===201) {
-     const token=res.data.data.token;////////////////////
-     //console.log(token);
-     const decode=jwtDecode(token)
-      //console.log(decode);
-      
-      setLoggedin(decode);
-      setStatslog(true);
-      //console.log(token);
-      
-      localStorage.tk = token;
-      setUserLogTry(true);
-      navigate("/");
-    } else {
+    try {
+      const res = await axios({
+        method: "post",
+        url: `${URL}/api/users/login`,
+        data: Tryloggeduser,
+      });
+
+      if (res.status === 201) {
+        const token = res.data.data.token;
+        const decode = jwtDecode(token);
+
+        setLoggedin(decode);
+        setStatslog(true);
+        localStorage.tk = token;
+        setUserLogTry(true);
+        navigate("/");
+      } else {
+        setUserLogTry(false);
+      }
+    } catch (error) {
       setUserLogTry(false);
-      //console.log("noo");
-      // console.log(userLogTry);
+      console.log("Login failed:", error.message);
     }
   };
 
