@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import {
   Card,
@@ -9,102 +10,91 @@ import {
 } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router";
 import axios from "axios";
+
 const SignUp = () => {
   const URL = import.meta.env.VITE_URL;
   const navigate = useNavigate();
+
   const [user, setUser] = useState({
     name: "",
     email: "",
     password: "",
     role: "user",
   });
-  const [confirmedPassword, setConfirmedPassword] = useState();
+  const [confirmedPassword, setConfirmedPassword] = useState("");
 
   const [catchedError, setCatchedError] = useState({
     nameError: false,
     emailError: false,
     passwordError: false,
     confirmPasswordError: false,
+    emailConflictError: false,
   });
-  const regularExperissonEmail =
-    /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+  const regularExpressionEmail =
+    /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
 
   const saveInput = async () => {
-   const res=  axios({
-      method: "post",
-      url: `${URL}/api/users/signup`,
-      data: user,
-    })
-    if(res.status===201){
-      console.log(good);
-      return true
-      
+    try {
+      const res = await axios.post(`${URL}/api/users/signup`, user);
+      return { success: res.status === 201 };
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        return { success: false, message: "Email is already registered" };
+      }
+      console.error("Signup error:", error);
+      return { success: false, message: "Internal server error" };
     }
-    else{
-      console.log("erorr");
-        return false
-    }
-
-      // .then((res) => {
-      //   if(res.status==201)
-      //   {
-      //     console.log("goood");
-          
-      //     return true
-      //   }
-      // })
-      // .catch((e) => {
-      //   console.log("erorrrr");
-      //   return false
-      // });
   };
-  const resetErrors = () => {
-    console.log("back");
 
-    setCatchedError({ ...catchedError, nameError: false });
-    setCatchedError({ ...catchedError, emailError: false });
-    setCatchedError({ ...catchedError, passwordError: false });
-    setCatchedError({ ...catchedError, confirmPasswordError: false });
+  const resetErrors = () => {
+    setCatchedError({
+      nameError: false,
+      emailError: false,
+      passwordError: false,
+      confirmPasswordError: false,
+      emailConflictError: false,
+    });
   };
 
   const createAccount = async (e) => {
-    // e.preventDefault()
-    // console.log("hello");
-    // console.log(e.target.value);
     e.preventDefault();
     resetErrors();
-    if (user.name.length < 2) {
-      setCatchedError({ ...catchedError, nameError: true });
-    } else if (!regularExperissonEmail.test(user.email)) {
-      // resetErrors();
 
-      setCatchedError({ ...catchedError, emailError: true });
-    } else if (user.password.length < 8) {
-      // resetErrors();
+    if (user.name.trim().length < 2) {
+      setCatchedError((prev) => ({ ...prev, nameError: true }));
+      return;
+    }
 
-      setCatchedError({ ...catchedError, passwordError: true });
-    } else if (user.password !== confirmedPassword) {
-      // resetErrors();
+    if (!regularExpressionEmail.test(user.email)) {
+      setCatchedError((prev) => ({ ...prev, emailError: true }));
+      return;
+    }
 
-      setCatchedError({ ...catchedError, confirmPasswordError: true });
+    if (user.password.length < 8) {
+      setCatchedError((prev) => ({ ...prev, passwordError: true }));
+      return;
+    }
+
+    if (user.password !== confirmedPassword) {
+      setCatchedError((prev) => ({ ...prev, confirmPasswordError: true }));
+      return;
+    }
+
+    const result = await saveInput();
+
+    if (result.success) {
+      setUser({ name: "", email: "", password: "", role: "user" });
+      setConfirmedPassword("");
+      navigate("/");
     } else {
-     const gotCheck= await saveInput();
-     //console.log(gotCheck);
-     
-     if(gotCheck){
-       navigate("/");
-       
-      }
-      else{
-        alert("internal server error")
+      if (result.message === "Email is already registered") {
+        setCatchedError((prev) => ({ ...prev, emailConflictError: true }));
+      } else {
+        alert(result.message);
       }
     }
-    //u can navigate after that
   };
-
-  useEffect(() => {
-    console.log(catchedError);
-  }, [catchedError]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
@@ -145,7 +135,7 @@ const SignUp = () => {
               >
                 Create Account
               </Typography>
-              
+
               <Typography
                 variant="paragraph"
                 color="gray"
@@ -165,8 +155,18 @@ const SignUp = () => {
                         : "!border-t-blue-gray-200 !border-blue-700 focus:!border-blue-500"
                     }`}
                     containerProps={{ className: "min-w-[100px]" }}
+                    value={user.name}
                     onChange={(e) => setUser({ ...user, name: e.target.value })}
                   />
+                  {catchedError.nameError && (
+                    <Typography
+                      variant="small"
+                      color="red"
+                      className="mt-1 text-xs"
+                    >
+                      Name must be at least 2 characters long.
+                    </Typography>
+                  )}
                 </div>
 
                 <div className="group">
@@ -174,27 +174,35 @@ const SignUp = () => {
                     label="Email"
                     size="md"
                     className={`text-sm md:text-base ${
-                      catchedError.emailError
+                      catchedError.emailError || catchedError.emailConflictError
                         ? "!border-red-700"
                         : "!border-t-blue-gray-200 focus:!border-blue-500"
                     }`}
                     containerProps={{ className: "min-w-[100px]" }}
+                    value={user.email}
                     onChange={(e) =>
                       setUser({ ...user, email: e.target.value })
                     }
                   />
+                  {catchedError.emailError && (
+                    <Typography
+                      variant="small"
+                      color="red"
+                      className="mt-1 text-xs"
+                    >
+                      Please enter a valid email address.
+                    </Typography>
+                  )}
+                  {catchedError.emailConflictError && (
+                    <Typography
+                      variant="small"
+                      color="red"
+                      className="mt-1 text-xs"
+                    >
+                      Email is already registered.
+                    </Typography>
+                  )}
                 </div>
-
-                {/* <div className="group">
-                <Input
-
-                label="Username"
-                size="md"
-                className="!border-t-blue-gray-200 focus:!border-blue-500 text-sm md:text-base"
-                containerProps={{ className: "min-w-[100px]" }}
-
-                />
-                </div> */}
 
                 <div className="group">
                   <Input
@@ -207,6 +215,7 @@ const SignUp = () => {
                         : "!border-t-blue-gray-200 focus:!border-blue-500"
                     }`}
                     containerProps={{ className: "min-w-[100px]" }}
+                    value={user.password}
                     onChange={(e) =>
                       setUser({ ...user, password: e.target.value })
                     }
@@ -230,6 +239,15 @@ const SignUp = () => {
                     </svg>
                     Use at least 8 characters
                   </Typography>
+                  {catchedError.passwordError && (
+                    <Typography
+                      variant="small"
+                      color="red"
+                      className="mt-1 text-xs"
+                    >
+                      Password must be at least 8 characters.
+                    </Typography>
+                  )}
                 </div>
 
                 <div className="group">
@@ -243,10 +261,18 @@ const SignUp = () => {
                         : "!border-t-blue-gray-200 focus:!border-blue-500"
                     }`}
                     containerProps={{ className: "min-w-[100px]" }}
-                    onChange={(e) => {
-                      setConfirmedPassword(e.target.value);
-                    }}
+                    value={confirmedPassword}
+                    onChange={(e) => setConfirmedPassword(e.target.value)}
                   />
+                  {catchedError.confirmPasswordError && (
+                    <Typography
+                      variant="small"
+                      color="red"
+                      className="mt-1 text-xs"
+                    >
+                      Passwords do not match.
+                    </Typography>
+                  )}
                 </div>
 
                 <div className="flex items-center justify-center">
@@ -265,11 +291,9 @@ const SignUp = () => {
                   fullWidth
                   size="md"
                   className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-lg py-2.5 md:py-3 text-sm md:text-base transition-all duration-300 hover:scale-[1.02] hover:shadow-lg"
-                  // onSubmit={saveInput}
                 >
                   Sign Up
                 </Button>
-                {/* <Button onClick={()=>{navigate("/")}}>go</Button> */}
               </div>
             </div>
           </form>

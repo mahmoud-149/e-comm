@@ -11,6 +11,8 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router";
 const AddProduct = () => {
+  const token = localStorage.getItem("token");
+
   const [newProduct, setNewProduct] = useState({
     title: "",
     description: "",
@@ -42,6 +44,9 @@ const AddProduct = () => {
          method: "post",
          url: `${URL}/api/products/`,
          data: newProduct,
+         headers: {
+           authorization: `Bearer ${token}`,
+         },
        })
          .then((res) => {
            console.log(res);
