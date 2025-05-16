@@ -179,3 +179,7 @@ const Men = ({ menProducts, addToCart }) => {
 };
 
 export default Men;
+
+
+//............
+
