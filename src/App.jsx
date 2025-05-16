@@ -110,11 +110,11 @@ const App = () => {
   };
   const addToCart = (product) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === product.id);
+      const existingItem = prevItems.find((item) => item._id === product._id);
 
       if (existingItem) {
         return prevItems.map((item) =>
-          item.id === product.id
+          item._id === product._id
             ? { ...item, quantity: item.quantity + product.quantity }
             : item
         );
@@ -127,7 +127,7 @@ const App = () => {
   const removeFromCart = (productId) => {
     setCartItems((prevItems) => {
       return prevItems.map((item) =>
-        item.id === productId
+        item._id === productId
           ? {
               ...item,
               quantity: item.quantity > 0 ? { deleteItem } : item.quantity - 1,
@@ -145,13 +145,13 @@ const App = () => {
 
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === productId ? { ...item, quantity: newQuantity } : item
+        item._id === productId ? { ...item, quantity: newQuantity } : item
       )
     );
   };
 
   const deleteItem = (itemId) => {
-    setCartItems((prevCart) => prevCart.filter((item) => item.id !== itemId));
+    setCartItems((prevCart) => prevCart.filter((item) => item._id !== itemId));
   };
 
   const clearCart = () => {
@@ -224,9 +224,9 @@ const App = () => {
 };
 
 const ProductDetailsWrapper = ({ products, addToCart }) => {
-  const { id } = useParams();
+  const { _id } = useParams();
   const navigate = useNavigate();
-  const product = products.find((p) => p.id === parseInt(id));
+  const product = products.find((p) => p._id === parseInt(_id));
 
   if (!product) return <div>Product not found</div>;
 
