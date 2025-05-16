@@ -114,7 +114,7 @@ const Header = ({ cartItems, updateCartItemQuantity, deleteItem }) => {
   const closeDrawerRight = () => setOpenRight(false);
 
   const handleQuantityChange = (item, newQuantity) => {
-    updateCartItemQuantity(item.id, parseInt(newQuantity));
+    updateCartItemQuantity(item._id, parseInt(newQuantity));
   };
 
   const handleWindowResize = () =>
@@ -273,7 +273,7 @@ const Header = ({ cartItems, updateCartItemQuantity, deleteItem }) => {
                     </div>
                     <button
                       className="text-red-500 hover:text-red-700 text-sm mt-1"
-                      onClick={() => deleteItem(item.id)}
+                      onClick={() => deleteItem(item._id)}
                     >
                       <FaTrash size={14} />
                     </button>

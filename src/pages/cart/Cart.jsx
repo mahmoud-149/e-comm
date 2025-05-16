@@ -29,7 +29,7 @@ const Cart = ({ cartItems, updateCartItemQuantity, clearCart, deleteItem }) => {
   }, [cartItems]);
 
   const handleQuantityChange = (item, newQuantity) => {
-    updateCartItemQuantity(item.id, parseInt(newQuantity));
+    updateCartItemQuantity(item._id, parseInt(newQuantity));
   };
 
   if (cartItems.length === 0) {
@@ -81,7 +81,7 @@ const Cart = ({ cartItems, updateCartItemQuantity, clearCart, deleteItem }) => {
             {/* Mobile View */}
             <div className="md:hidden">
               {cartItems.map((item) => (
-                <div key={item.id} className="border-b p-4">
+                <div key={item._id} className="border-b p-4">
                   <div className="flex gap-4">
                     <img
                       src={item.image}
@@ -127,7 +127,7 @@ const Cart = ({ cartItems, updateCartItemQuantity, clearCart, deleteItem }) => {
                         </div>
                         <button
                           className="text-red-500 hover:text-red-700 ml-2"
-                          onClick={() => deleteItem(item.id)}
+                          onClick={() => deleteItem(item._id)}
                         >
                           <FaTrash size={16} />
                         </button>
@@ -181,7 +181,7 @@ const Cart = ({ cartItems, updateCartItemQuantity, clearCart, deleteItem }) => {
                     : "p-4 border-b border-blue-gray-50";
 
                   return (
-                    <tr key={item.id}>
+                    <tr key={item._id}>
                       <td className={classes}>
                         <div className="flex items-center gap-3">
                           <img
@@ -248,7 +248,7 @@ const Cart = ({ cartItems, updateCartItemQuantity, clearCart, deleteItem }) => {
                       <td className={classes}>
                         <button
                           className="text-red-500 hover:text-red-700"
-                          onClick={() => deleteItem(item.id)}
+                          onClick={() => deleteItem(item._id)}
                         >
                           <FaTrash size={16} />
                         </button>
