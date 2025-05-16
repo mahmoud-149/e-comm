@@ -5,55 +5,63 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import Store from "../../../context/Store";
 
-const TABLE_HEAD = ["name", "email", "Id", "Role", "Action"];
+const TABLE_HEAD = ["name", "email",  "Role", "Action"];
 
 const UsersTable = () => {
-  const {allUsers,setAllUsers}=useContext(Store)
+  const { allUsers,  getAllUsers } = useContext(Store);
         const URL = import.meta.env.VITE_URL;
+        const token = localStorage.getItem("token");
 
   // const [allUsers, setAllUsers] = useState([]);
     const [gotChange,setGotChange]=useState(false);
 
-  const getAllUsers = async () => {
-    // const URL = import.meta.env.VITE_URL;
-    const req = await axios({
-      method: "get",
-      url: `${URL}/api/users`,
-    });
-    setAllUsers(req.data);
-  };
+  // const getAllUsers = async () => {
+  //   // const URL = import.meta.env.VITE_URL;
+  //   const req = await axios({
+  //     method: "get",
+  //     url: `${URL}/api/users`,
+  //   });
+  //   setAllUsers(req.data);
+  // };
 
-    const MakeAdmin=(id)=>{
+    const MakeAdmin=(_id)=>{
       const targetUser=  allUsers.find((user)=>{
 
-            if(user.id==id){
-                user.role="admin";            
+            if(user._id==_id){
+                user.role="admin";    
+                console.log(user);
+                        
                 return user
             }
             
         })
-        saveTheEdit(targetUser.id);
+        //console.log(targetUser.email);
+        
+        saveTheEdit(targetUser._id);
         // console.log(targetUser.id);
         //  setAllUsers(targetUser)
     };
 
-    const saveTheEdit=async (changeduserId)=>{
-        // const URL = import.meta.env.VITE_URL;
-        try{
-           await axios({
-             method: "patch", //there is put for change all the object and "patch " for only the key
-             url: `${URL}/api/users/${changeduserId}`,
-             data: { role: "admin" },
-            });
-            setGotChange(!gotChange);
-        }catch(e){
-            console.log(e);
-            
-        }
-        
-    }
+    const saveTheEdit = async (changeduser_id) => {
+      // const URL = import.meta.env.VITE_URL;
+      try {
+        // const token = localStorage.getItem("token");
 
-    const handleRemove = (id) => {
+        await axios({
+          method: "put", //there is put for change all the object and "patch " for only the key
+          url: `${URL}/api/users/update/${changeduser_id}`,
+          data: { role: "admin" },
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        });
+        setGotChange(!gotChange);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    const handleRemove = (_id) => {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -69,28 +77,28 @@ const UsersTable = () => {
             text: "The User has been removed.",
             icon: "success",
           });
-    
-        //   console.log(id);
-        RemoveUser(id);
+
+          //   console.log(id);
+          RemoveUser(_id);
         }
       });
     };
 
-    const RemoveUser=async (id)=>{
-        try{    
-            axios({
-                method:"delete",
-                url:`${URL}/api/users/${id}`
-            })
+    const RemoveUser = async (_id) => {
+      try {
+        axios({
+          method: "delete",
+          url: `${URL}/api/users/delete/${_id}`,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        });
 
-            setGotChange(!gotChange)
-        }
-        catch(e){
-            console.log(e.message);
-            
-        }
-
-    }
+        setGotChange(!gotChange);
+      } catch (e) {
+        console.log(e.message);
+      }
+    };
 
   useEffect(() => {
     getAllUsers();
@@ -123,12 +131,13 @@ const UsersTable = () => {
           </tr>
         </thead>
         <tbody>
-          {allUsers?.map(({ name, email, id, role }, index) => {
+          {allUsers?.map(({ name, email, _id, role }, index) => {
             const isLast = index === allUsers.length - 1;
             const classes = isLast
               ? "p-4 "
               : "p-4 border-b border-blue-gray-50";
-
+            //console.log(_id);
+            
             return (
               <tr key={name}>
                 <td className={classes}>
@@ -149,16 +158,16 @@ const UsersTable = () => {
                     {email}
                   </Typography>
                 </td>
-                <td className={classes}>
+                {/* <td className={classes}>
                   <Typography>{id}</Typography>
-                </td>
+                </td> */}
                 <td className={classes}>
                   <Typography>{role}</Typography>
                 </td>
                 <td className={classes}>
                   <div className=" flex gap-2 justify-center">
-                    <Link to={`view/${id}`}>
-                      <Button color="blue">View</Button>
+                    <Link to={`view/${_id}`}>
+                      <Button color="blue">View </Button>
                     </Link>
                     {/* <Link to={`edit/${id}`}>
                       <Button>Edit</Button>
@@ -166,7 +175,7 @@ const UsersTable = () => {
 
                     <Button
                       onClick={() => {
-                        handleRemove(id);
+                        handleRemove(_id);
                       }}
                       color="red"
                     >
@@ -176,10 +185,10 @@ const UsersTable = () => {
                     <Button
                       onClick={() => {
                         // console.log(role);
-                        MakeAdmin(id);
+                        MakeAdmin(_id);
                       }}
                       color="green"
-                      disabled={role=="admin"}
+                      disabled={role == "admin"}
                     >
                       Make Admin
                     </Button>
