@@ -98,7 +98,7 @@ const Header = ({ cartItems, updateCartItemQuantity, deleteItem }) => {
   const location = useLocation();
 
   const cartItemsCount = cartItems.reduce(
-    (total, item) => total + item.quantity,
+    (total, item) => total + item,
     0
   );
 
