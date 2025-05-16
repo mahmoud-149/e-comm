@@ -20,10 +20,10 @@ const AdminViewLayout = () => {
         <Route path="productcontrol" element={<ProductControl />} />
         <Route path="productcontrol/addproduct" element={<AddProduct />} />
 
-        <Route path="usercontrol/view/:id" element={<ViewUser />} />
+        <Route path="usercontrol/view/:_id" element={<ViewUser />} />
 
-        <Route path="productcontrol/view/:id" element={<ViewProduct />} />
-        <Route path="productcontrol/edit/:id" element={<EditProduct />} />
+        <Route path="productcontrol/view/:_id" element={<ViewProduct />} />
+        <Route path="productcontrol/edit/:_id" element={<EditProduct />} />
       </Routes>
       <Footer />
     </div>

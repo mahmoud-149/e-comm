@@ -18,6 +18,7 @@ const Store = createContext({
   setAllUsers: undefined,
   getAllUsers: undefined,
   productSE: "",
+  getTheProducts:undefined,
 });
 
 export default Store;

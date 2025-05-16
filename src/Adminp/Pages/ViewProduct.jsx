@@ -12,7 +12,7 @@ import {
 } from "@material-tailwind/react";
 
 const ViewProduct = () => {
-  const { id } = useParams();
+  const { _id } = useParams();
     const [product, setProduct] = useState(null);
     const navigate=useNavigate();
 
@@ -22,9 +22,9 @@ const ViewProduct = () => {
       const URL=import.meta.env.VITE_URL;
       const req = await axios({
         method: "get",
-        url: `${URL}/api/products/${id}`,
+        url: `${URL}/api/products/${_id}`,
       });
-      setProduct(req.data);
+      setProduct(req.data.data.data);
     }
     useEffect(()=>{
         getTheView()
@@ -59,7 +59,7 @@ const ViewProduct = () => {
           </Typography>
         </CardBody>
         <CardFooter className="pt-0 flex flex-col justify-center items-center gap-4">
-          <Link to={`/admin/productcontrol/edit/${id}`} className="w-full">
+          <Link to={`/admin/productcontrol/edit/${_id}`} className="w-full">
             <Button
               ripple={false}
               fullWidth={true}

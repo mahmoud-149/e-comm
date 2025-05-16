@@ -38,7 +38,7 @@ const App = () => {
       axios({
         method: "get",
 
-        url: `${URL}/api/users/${decode.email}`,
+        url: `${URL}/api/users/${decode._id}`,
 
       })
         .then((res) => {
@@ -96,12 +96,17 @@ const App = () => {
   }, []);
 
   const getAllUsers = async () => {
+    const token = localStorage.getItem("token");
     const URL = import.meta.env.VITE_URL;
     const req = await axios({
       method: "get",
       url: `${URL}/api/users`,
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     });
-    setAllUsers(req.data);
+
+    setAllUsers(req.data.data.data);
   };
   const addToCart = (product) => {
     setCartItems((prevItems) => {
@@ -171,6 +176,7 @@ const App = () => {
         setAllUsers,
         getAllUsers,
         productSE,
+        getTheProducts,
       }}
     >
       <div>
