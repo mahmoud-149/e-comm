@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import Store from "../../../context/Store";
 import { Link, useNavigate } from "react-router";
-import { FiCamera } from "react-icons/fi";
 import { Avatar } from "@material-tailwind/react";
 
 const EditProfile = () => {
@@ -9,8 +8,6 @@ const EditProfile = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
-    gender: "",
     password: "",
     confirmPassword: "",
     profilePicture: null,
@@ -28,27 +25,11 @@ const EditProfile = () => {
         ...prev,
         name: loggedin.name || "",
         email: loggedin.email || "",
-        phone: loggedin.phone || "",
-        gender: loggedin.gender || "",
         previewImage: loggedin.photo || prev.previewImage,
       }));
     }
   }, [loggedin]);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prev) => ({
-          ...prev,
-          profilePicture: file,
-          previewImage: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const validate = () => {
     const newErrors = {};
@@ -91,8 +72,6 @@ const EditProfile = () => {
         ...loggedin,
         name: formData.name,
         email: formData.email,
-        phone: formData.phone,
-        gender: formData.gender,
         ...(formData.password && { password: formData.password }),
         ...(formData.profilePicture && { photo: formData.previewImage }),
       };
@@ -122,19 +101,7 @@ const EditProfile = () => {
           size="xxl"
           className="border-4 border-HeroText"
         />
-        <button
-          onClick={() => document.getElementById("avatar-upload").click()}
-          className="absolute bottom-0 right-1/2 translate-x-1/2 bg-MainButton text-HeroText p-2 rounded-full hover:bg-blue-700 hover:text-HeroText transition"
-        >
-          <FiCamera className="h-5 w-5" />
-        </button>
-        <input
-          id="avatar-upload"
-          type="file"
-          accept="image/*"
-          className="hidden"
-          onChange={handleImageChange}
-        />
+  
       </div>
 
       {success && (
@@ -186,34 +153,6 @@ const EditProfile = () => {
             )}
           </div>
 
-          <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-MainButton">
-            <label className="block text-md font-semibold text-MainText mb-2">
-              Phone
-            </label>
-            <input
-              type="tel"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg"
-            />
-          </div>
-
-          <div className="bg-gray-50 p-6 rounded-lg border-l-4 border-MainButton">
-            <label className="block text-md font-semibold text-MainText mb-2">
-              Gender
-            </label>
-            <select
-              name="gender"
-              value="formData.gender"
-              onChange={handleChange}
-              className="w-full p-3 border border-gray-300 rounded-lg"
-            >
-              <option value="">Select</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
         </div>
 
         <div className="space-y-6">
